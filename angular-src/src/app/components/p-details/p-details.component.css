@@ -1,6 +1,7 @@
 ngb-carousel {
     max-width: 80%;
     margin: 50px auto;
+    align-items: center;
 }
 
 ngb-carousel img {
@@ -43,3 +44,15 @@ ngb-carousel {
 .carousel-indicators{
     z-index: 20;
 }
+
+.content-container {
+    margin-top : 40px;
+  }
+  
+  .content-container ul {
+    margin : 5px;
+  }
+  
+  .content-container li {
+    margin : 10px;
+  }

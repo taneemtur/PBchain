@@ -6,7 +6,7 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <div *ngFor="let p of path_details; let i=index">
-        <a mat-list-item routerLink="{{p.path}}" routerLinkActive="active" (click)="set_current(p.name)">{{p.name}}</a>
+        <a mat-list-item routerLink="{{p.path}}" routerLinkActive="active" (click)="set_current()">{{p.name}}</a>
       </div>
     </mat-nav-list>
   </mat-sidenav>

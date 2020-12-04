@@ -23,6 +23,8 @@ import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PDetailsComponent } from './components/p-details/p-details.component';
+import { RegisterComponent } from './components/register/register.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { PDetailsComponent } from './components/p-details/p-details.component';
     ListingComponent,
     NavComponent,
     AddPropertyComponent,
-    PDetailsComponent
+    PDetailsComponent,
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

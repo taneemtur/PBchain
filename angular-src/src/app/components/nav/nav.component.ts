@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -25,18 +26,30 @@ export class NavComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private cdref: ChangeDetectorRef) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver, 
+    private cdref: ChangeDetectorRef, 
+    private router : Router) {
+      this.set_current()
+    }
 
   ngOnInit () {
-
+    
   }
 
   
-  set_current (name) {
-    this.current = name;
-    // this.cdref.detectChanges();
-
-    console.log(name)
+  set_current () {
+    let url;
+    // await url = this.router.url;
+    this.router.events.subscribe((u:any) => {
+      this.path_details.forEach((p) => {
+        if(p.path == u.url) {
+          // console.log(p.name)
+          this.current= p.name;
+        }
+      })
+    });
+    
   }
 
 }
