@@ -5,8 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
+      <mat-divider></mat-divider>
       <div *ngFor="let p of path_details; let i=index">
         <a mat-list-item routerLink="{{p.path}}" routerLinkActive="active" (click)="set_current()">{{p.name}}</a>
+        <mat-divider></mat-divider>
       </div>
     </mat-nav-list>
   </mat-sidenav>
@@ -18,7 +20,7 @@
         mat-icon-button
         (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon aria-label="Side nav toggle icon"> <img src="assets/img/icons/menu.png"> </mat-icon>
       </button>
       <span *ngIf="current">{{current}}</span>
     </mat-toolbar>

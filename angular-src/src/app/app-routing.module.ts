@@ -7,6 +7,7 @@ import { LoginComponent } from './components/login/login.component';
 import { PDetailsComponent } from './components/p-details/p-details.component';
 
 import { PListingComponent } from './components/p-listing/p-listing.component'
+import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
 
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path : 'property-details', component : PDetailsComponent},
   {path : 'register', component : RegisterComponent},
   {path : 'login', component : LoginComponent},
+  {path : 'profile', component : ProfileComponent}
 ];
 
 @NgModule({

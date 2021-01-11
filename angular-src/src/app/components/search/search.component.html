@@ -1,0 +1,83 @@
+<div class="search">
+      <div>
+          <form (submit)="onSubmit(group.value)">
+              <div class="basic-search">
+                <mat-button-toggle-group #group="matButtonToggleGroup">
+                    <mat-button-toggle value="BUY">BUY</mat-button-toggle>
+                    <mat-button-toggle value="RENT">RENT</mat-button-toggle>
+                  </mat-button-toggle-group>
+                  <br>
+                <mat-form-field>
+                    <mat-label>City</mat-label>
+                    <mat-select [(ngModel)]="selectedCity" name="selectedCity">
+                      <mat-option *ngFor="let city of cities" [value]="city">
+                        {{city}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+    
+                  <mat-form-field>
+                    <mat-label>Location</mat-label>
+                    <input matInput type="text" [(ngModel)]="location" name="location">
+                  </mat-form-field>
+
+                  <button mat-button color="primary" appearance="fill" class="submit-button" type="submit">Search</button>
+                  <br>
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      Detailed Search
+                    </mat-panel-title>
+
+                    <mat-panel-description>
+                        Specify what you want in the property
+                      </mat-panel-description>
+                  </mat-expansion-panel-header>
+                    <mat-form-field>
+                        <mat-label>Property Type</mat-label>
+                        <mat-select [(ngModel)]="selectedPropertyType" name="type">
+                          <mat-option *ngFor="let type of propertyTypes" [value]="type">
+                            {{type}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                   <div>
+                    <mat-label>Price Range (PKR)</mat-label>
+                    <mat-form-field>
+                          <mat-label>Min.</mat-label>
+                          <input matInput [(ngModel)]="selectedPriceRange.min" name="selectedPriceRange">
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <mat-label>Max.</mat-label>
+                      <input matInput [(ngModel)]="selectedPriceRange.max" name="selectedPriceRange">
+                    </mat-form-field>
+                   </div>
+
+                      <div>
+                        <mat-label>Area Range (Sq. Feet)</mat-label>
+                      <mat-form-field>
+                            <mat-label>Min.</mat-label>
+                            <input matInput [(ngModel)]="selectedAreaRange.min" name="selectedAreaRange">
+                      </mat-form-field>
+
+                      <mat-form-field>
+                        <mat-label>Max.</mat-label>
+                        <input matInput [(ngModel)]="selectedAreaRange.max" name="selectedAreaRange">
+                      </mat-form-field>
+                      </div>
+
+                      <mat-form-field>
+                        <mat-label>Bedrooms</mat-label>
+                        <mat-select [(ngModel)]="selectedBedrooms" name="bcount">
+                          <mat-option *ngFor="let bcount of bedrooms" [value]="bcount">
+                            {{bcount}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>            
+              </mat-expansion-panel>
+            </div>
+          </form>
+      </div>    
+</div>

@@ -19,8 +19,9 @@
     </div>
   </div> -->
 
+  <app-search></app-search>
   <div class="content" fxLayout="row wrap" fxLayoutGap="16px grid">
     <div [fxFlex]="(100/gridColumns) + '%'" fxFlex.xs="100%" fxFlex.sm="33%" *ngFor="let num of [1,2,3,4,5,6,7]">
-        <app-p-listing></app-p-listing>
+        <app-p-listing [PDetails]="propertyDetails"></app-p-listing>
     </div>
   </div>

@@ -81,7 +81,7 @@
     </mat-card>
   </div> -->
 
-  <mat-card class="listing content">
+  <!-- <mat-card class="listing content">
     <mat-card-header>
       <mat-card-title>Mountains </mat-card-title>
     </mat-card-header>
@@ -104,4 +104,40 @@
         <button mat-button color="primary" class="submit-button">Property Details</button>
        </div> 
     </mat-card-actions>
-</mat-card>
+</mat-card> -->
+
+<mat-card class="example-card">
+    <mat-card-header>
+      <!-- <div mat-card-avatar class="example-header-image"></div> -->
+      <mat-card-title>Property For {{propertyDetails.purpose}}</mat-card-title>
+      <mat-card-subtitle>Property in {{propertyDetails.city}}</mat-card-subtitle>
+      <span fxFlex></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>
+            <img src="assets/img/icons/menu.png">
+          </mat-icon>
+        </button>
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span>Save</span>
+          </button>
+          <button mat-menu-item>
+            <span>Report</span>
+          </button>
+        </mat-menu>        
+    </mat-card-header>
+    <img mat-card-image src="assets/img/property/property-2.jpg">
+    <mat-card-content class="content-container">
+      <ul>
+        <li>Bedroom : {{propertyDetails.bedroom}}</li>
+        <li>Washroom : {{propertyDetails.washroom}}</li>
+        <li>Area : {{propertyDetails.propertyArea}} Sq. Feet</li>
+        <li>Price : {{propertyDetails.cost}}</li>
+    </ul>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button>LIKE</button>
+      <button mat-button>SHARE</button>
+    </mat-card-actions>
+  </mat-card>

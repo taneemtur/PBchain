@@ -9,6 +9,18 @@ export class ListingComponent implements OnInit {
 
   constructor() { }
 
+  propertyDetails = {
+    city : "Lahore",
+    location : "Defecnce",
+    type : "HOME",
+    propertyArea : 500,
+    bedroom : 4,
+    totalRooms : 6,
+    washroom : 3,
+    cost : 10000000,
+    purpose : "RENT"
+  }
+
   
   gridColumns = 3;
   

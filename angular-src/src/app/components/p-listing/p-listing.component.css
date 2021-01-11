@@ -12,7 +12,7 @@
   }
   
 .content-container {
-  margin-top : 40px;
+  margin : auto;
 }
 
 .content-container ul {
@@ -21,7 +21,14 @@
 
 .content-container li {
   margin : 10px;
+  font-size: medium;
+  color: rgba(0,0,0,.87);
 }
+
+.options {
+  align-items: flex-end;
+}
+
 /*   
   mat-card {
     width: 30%;
@@ -49,3 +56,22 @@
     width : 40%;
     margin : auto;
   }
+
+  .icon img{
+    margin-left: 10px;
+  }
+
+  
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-card img {
+  margin-left: auto;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
