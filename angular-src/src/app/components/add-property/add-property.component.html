@@ -7,36 +7,57 @@
       <!-- <mat-card-content class="title">
         <h3>Add Item</h3>
       </mat-card-content> -->
-    <mat-card-content>
+
+      <mat-form-field>
+        <mat-label>City</mat-label>
+        <mat-select [(ngModel)]="selectedCity" name="selectedCity">
+          <mat-option *ngFor="let city of cities" [value]="city">
+            {{city}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Location</mat-label>
+        <input matInput type="text" [(ngModel)]="location" name="location">
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Property Type</mat-label>
+        <mat-select [(ngModel)]="selectedPropertyType" name="type">
+          <mat-option *ngFor="let type of propertyTypes" [value]="type">
+            {{type}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
+        <mat-form-field>
+          <mat-label>Property Area (Sq. Feet)</mat-label>
+          <input matInput type="number"  name="area">
+        </mat-form-field>
+
       <mat-form-field>
         <mat-label>Bedrooms</mat-label>
         <input matInput type="number"  name="bedroom">
       </mat-form-field>
-    </mat-card-content>
-  
-    <mat-card-content>
-    <mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Extra Rooms</mat-label>
+        <input matInput type="number"  name="extraRooms">
+      </mat-form-field>
+
+      <mat-form-field>
       <mat-label>Washroom</mat-label>
       <input matInput type="number"  name="washroom">
     </mat-form-field>
-  </mat-card-content>
-  
-  <mat-card-content>
-  <mat-form-field>
-    <mat-label>Location</mat-label>
-    <input matInput type="text"  name="location">
-  </mat-form-field>
-  </mat-card-content>
-  
-  <mat-card-content>
-  <mat-form-field>
+
+    <mat-form-field>
     <mat-label>Price</mat-label>
     <input matInput type="number"  name="price">
   </mat-form-field>
-  </mat-card-content>
-  
-  <mat-card-content>
-    <button mat-button color="primary" class="submit-button" type="submit">Add Property</button>
-  </mat-card-content>
-  </form>
+
+  <button mat-button color="primary" class="submit-button" type="submit">Add Property</button>
+
+</form>
   </mat-card>

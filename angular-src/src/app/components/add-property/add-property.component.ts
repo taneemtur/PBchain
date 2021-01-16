@@ -7,6 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddPropertyComponent implements OnInit {
 
+  cities = ["NONE","KARACHI", "LAHORE", "HYDERABAD", "ISLAMABAD"];
+  propertyTypes = ["HOMES", "FLAT", "PORTION", "ROOM", "COMMERCIAL"];
+  selectedPropertyType : string;
+  selectedCity : string;
+  location : string;
   constructor() { }
 
   ngOnInit(): void {

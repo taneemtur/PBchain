@@ -16,6 +16,8 @@ export class RegisterComponent implements OnInit {
   pnum : Number;
   userType : String;
 
+  userTypes = ["Indivisual", "Agent", "Developer"]
+
   constructor(private _snackBar : MatSnackBar, private router : Router) { }
 
   ngOnInit(): void {
