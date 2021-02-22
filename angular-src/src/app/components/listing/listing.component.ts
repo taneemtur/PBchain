@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListingComponent implements OnInit {
 
+  data : {"city" : "Lahore", "location" : "Defecnce", "type" : "HOME", "propertyArea" : "500", "bedroom" : "4", "washroom" : "2", "cost" : "10000000", "purpose" : "RENT"}
   constructor() { }
 
   propertyDetails = {

@@ -2,25 +2,27 @@
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
-const { User } = require('./User');
+const User = require('./User');
+const PropertyAsset = require('./Property');
 
 // const userPrefix = 'User';
 
-class PropertyAssetContract extends Contract {
+class UserContract extends Contract {
 
     async userExists (ctx, email) {
         const buffer = await ctx.stub.getState(email);
         return (!!buffer && buffer.length > 0);
     }
 
-    async createUserAccount (ctx, userData) {
-        const clientId = await ctx.stub.ClientIdentity().getID();
+    async createUserAccount (ctx, data) {
+        const userData = JSON.parse(data)
+        const clientId = ctx.clientIdentity.getID();
         const exists = await this.userExists(ctx, userData.email);
         if (exists) {
             throw new Error(`The user with email ${userData.email} already exists`);
         }
 
-        const user = new User(clientId, userData.email, userData.name, userData.pnum, userData.userType, userData.password);
+        const user = new User(clientId, userData.name, userData.email, userData.pnum, userData.userType, userData.password);
         const buffer = Buffer.from(JSON.stringify(user));
         await ctx.stub.putState(userData.email, buffer);
     }
@@ -35,51 +37,65 @@ class PropertyAssetContract extends Contract {
         const user = JSON.parse(userBuffer.toString())
         console.log(user);
         return user;
-    }  
+    }
+}
 
-    async propertyAssetExists(ctx, propertyAssetId) {
-        const buffer = await ctx.stub.getState(propertyAssetId);
+class PropertyAssetContract extends UserContract {
+
+    async propertyAssetExists(ctx, propertyAssetId, owner) {
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        const buffer = await ctx.stub.getState(assetKey);
         return (!!buffer && buffer.length > 0);
     }
 
-    async createPropertyAsset(ctx, propertyAssetId, value) {
-        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+    async createPropertyAsset(ctx, propertyAssetId, data, owner) {
+        const propertyAssetData = JSON.parse(data)
+        console
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);
         if (exists) {
             throw new Error(`The property asset ${propertyAssetId} already exists`);
         }
-        const asset = { value };
+        const asset = new PropertyAsset(propertyAssetId, owner, propertyAssetData);
+        
         const buffer = Buffer.from(JSON.stringify(asset));
-        await ctx.stub.putState(propertyAssetId, buffer);
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        await ctx.stub.putState(assetKey, buffer);
     }
 
-    async readPropertyAsset(ctx, propertyAssetId) {
-        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+    async readPropertyAsset(ctx, propertyAssetId, owner) {
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);
         if (!exists) {
             throw new Error(`The property asset ${propertyAssetId} does not exist`);
         }
-        const buffer = await ctx.stub.getState(propertyAssetId);
+        const buffer = await ctx.stub.getState(assetKey);
         const asset = JSON.parse(buffer.toString());
         return asset;
     }
 
-    async updatePropertyAsset(ctx, propertyAssetId, newValue) {
-        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+    async updatePropertyAsset(ctx, propertyAssetId, data, owner) {
+        const propertyAssetData = JSON.parse(data)
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);
         if (!exists) {
             throw new Error(`The property asset ${propertyAssetId} does not exist`);
         }
-        const asset = { value: newValue };
+        const asset = new PropertyAsset(propertyAssetId, owner, propertyAssetData)
         const buffer = Buffer.from(JSON.stringify(asset));
-        await ctx.stub.putState(propertyAssetId, buffer);
+        await ctx.stub.putState(assetKey, buffer);
     }
 
-    async deletePropertyAsset(ctx, propertyAssetId) {
-        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+    async deletePropertyAsset(ctx, propertyAssetId, owner) {
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);
         if (!exists) {
             throw new Error(`The property asset ${propertyAssetId} does not exist`);
         }
-        await ctx.stub.deleteState(propertyAssetId);
+        await ctx.stub.deleteState(assetKey);
     }
 
 }
 
-module.exports = PropertyAssetContract;
+module.exports.UserContract = UserContract;
+module.exports.PropertyAssetContract = PropertyAssetContract;
+

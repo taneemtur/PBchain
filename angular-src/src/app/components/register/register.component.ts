@@ -16,6 +16,14 @@ export class RegisterComponent implements OnInit {
   pnum : Number;
   userType : String;
 
+  typeDetails = {
+    orgName : "",
+    orgCity : "",
+    orgEmail : "",
+    orgAdd : "",
+    orgNum : 0
+  }
+
   userTypes = ["Indivisual", "Agent", "Developer"]
 
   constructor(private _snackBar : MatSnackBar, private router : Router) { }
@@ -24,13 +32,18 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit () {
-    let data : User = {
-      "name" : this.name,
-      "email" : this.email,
-      "pnum" : this.pnum,
-      "userType" : this.userType,
-      "password" : this.password
-    } 
+    let data = {
+      name : this.name,
+      email : this.email,
+      pnum : this.pnum,
+      userType : this.userType,
+      typeDetails : {},
+      password : this.password
+    }
+
+    if(this.userType != "Indivisiual") {
+      data.typeDetails = this.typeDetails
+    }
 
     this._snackBar.open("Successfully Registered.", "", {
       duration: 2000,
