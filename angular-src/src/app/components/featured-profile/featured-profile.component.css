@@ -1,0 +1,32 @@
+/* .slide-container {
+    margin : 5%;
+    
+}
+
+.slide {
+    margin-left: 10%;
+    margin-right: 10%;
+} */
+
+.hor {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-right: 5px;
+    margin-left: 5px;
+    
+} 
+
+.hor mat-card-title {
+    text-align: center;
+}
+
+.scroll {
+    padding : 10px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.scroll app-profile-card {
+    display : inline-block;
+}

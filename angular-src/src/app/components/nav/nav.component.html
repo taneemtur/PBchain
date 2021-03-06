@@ -1,3 +1,4 @@
+
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
@@ -13,6 +14,12 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
+    <mat-toolbar>
+      <span class="text-uppercase font-weight-bold">Property Blockchain Application</span>
+      <span class="example-spacer"></span>
+      <button mat-button routerLink="/login" routerLinkActive="active">Sign In</button>
+      <button mat-button routerLink="/register" routerLinkActive="active">Register</button>
+    </mat-toolbar>
     <mat-toolbar color="primary">
       <button
         type="button"
@@ -22,8 +29,9 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon"> <img src="assets/img/icons/menu.png"> </mat-icon>
       </button>
-      <span *ngIf="current">{{current}}</span>
+      <span class="text-uppercase font-weight-bold" *ngIf="current">{{current}}</span>
     </mat-toolbar>
     <router-outlet></router-outlet>
+    <app-footer></app-footer>
   </mat-sidenav-content>
 </mat-sidenav-container>

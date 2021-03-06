@@ -1,0 +1,33 @@
+<mat-card class="example-card">
+    <mat-card-header>
+      <mat-card-title>{{agencyName}}</mat-card-title>
+      <mat-card-subtitle>Based in {{agencyCity}}</mat-card-subtitle>
+      <span fxFlex></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>
+            <img src="assets/img/icons/menu.png">
+          </mat-icon>
+        </button>
+        <!-- <mat-icon aria-hidden="false" aria-label="Example home icon">home</mat-icon> -->
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span>Save</span>
+          </button>
+          <button mat-menu-item>
+            <span>Report</span>
+          </button>
+        </mat-menu>        
+    </mat-card-header>
+    <img mat-card-image src="assets/img/logo-carousel/lc-4.png">
+    <mat-card-content class="content-container">
+      <ul>
+        <li>Phone Number: {{pNum}}</li>
+        <li>Email : {{agencyEmail}}</li>
+        <li>Properties Posted : {{proPosted}}</li>
+        <li>Office Address : {{agencyAdd}}</li>
+    </ul>
+    </mat-card-content>
+    <mat-card-actions class="action-container">
+      <button mat-button color="primary" class="submit-button">See Posted Properties</button>
+    </mat-card-actions>
+  </mat-card>

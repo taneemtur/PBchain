@@ -25,6 +25,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PDetailsComponent } from './components/p-details/p-details.component';
 import { RegisterComponent } from './components/register/register.component';
@@ -35,6 +36,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ProfileComponent } from './components/profile/profile.component';
 import { SearchComponent } from './components/search/search.component';
+import { FeaturedListingComponent } from './components/featured-listing/featured-listing.component';
+import { ProfileCardComponent } from './components/profile-card/profile-card.component';
+import { FeaturedProfileComponent } from './components/featured-profile/featured-profile.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { NavbarTopComponent } from './components/navbar-top/navbar-top.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +54,12 @@ import { SearchComponent } from './components/search/search.component';
     RegisterComponent,
     LoginComponent,
     ProfileComponent,
-    SearchComponent
+    SearchComponent,
+    FeaturedListingComponent,
+    ProfileCardComponent,
+    FeaturedProfileComponent,
+    FooterComponent,
+    NavbarTopComponent
   ],
   imports: [
     BrowserModule,
@@ -73,7 +84,7 @@ import { SearchComponent } from './components/search/search.component';
     MatButtonToggleModule,
     MatSelectModule,
     MatExpansionModule,
-    MatGridListModule
+    MatGridListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

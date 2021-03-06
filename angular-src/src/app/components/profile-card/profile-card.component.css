@@ -1,0 +1,69 @@
+.listing {
+  top: 0;
+  margin: 10px;
+  padding-left: 30px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  overflow: hidden;
+}
+
+.content-container {
+margin : auto;
+}
+
+.content-container ul {
+margin : 5px;
+}
+
+.content-container li {
+margin : 10px;
+font-size: medium;
+color: rgba(0,0,0,.87);
+}
+
+.options {
+align-items: flex-end;
+}
+
+/*   
+mat-card {
+  width: 30%;
+  margin: 10% auto;
+  border-radius: 8px;
+} */
+
+/* .content { 
+  padding: 16px; 
+}
+
+.content > mat-card { 
+  width: 200px; 
+} */
+
+.action-container {
+  text-align: center;
+}
+
+.action-container button {
+  margin : 5px;
+}
+
+
+.icon img{
+  margin-left: 10px;
+}
+
+
+
+.example-card {
+  width : auto;
+}
+
+.example-card img {
+margin-left: auto;
+}
+
