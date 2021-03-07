@@ -1,4 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+@import 'asset/css/animate.css';
+@import 'asset/css/bootstrap-select.min.css';
+@import 'asset/css/bootstrap-theme.css';
+@import 'asset/css/font-awesome.min.css';
+@import 'asset/css/fontello.css';
+/* @import 'asset/css/icheck.min_all.css'; */
+@import 'asset/css/ion.rangeSlider.css';
+/* @import 'asset/css/ion.rangeSlider.skinFlat.css'; */
+/* @import 'asset/css/ion.rangeSlider.skinNice.css'; */
+@import 'asset/css/jquery.slitslider.css';
+@import 'asset/css/lightslider.min.css';
+@import 'asset/css/normalize.css';
+/* @import 'asset/css/owl.carousel.css'; */
+/* @import 'asset/css/owl.theme.css'; */
+@import 'asset/css/owl.transitions.css';
+@import 'asset/css/price-range.css';
+@import 'asset/css/responsive.css';
+@import 'asset/css/slider.css';
+@import 'asset/css/styleNoJS.css';
+@import 'asset/css/wizard.css';
+@import 'assets/css/bootstrap.min.css';
+/* @import 'assets/css/elegant-icons.css'; */
+/* @import 'assets/css/font-awesome.min.css'; */
+/* @import 'assets/css/image-uploader.min.css'; */
+/* @import 'assets/css/jquery-ui.min.css'; */
+@import 'assets/css/magnific-popup.css';
+@import 'assets/css/nice-select.css';
+/* @import 'assets/css/owl.carousel.min.css'; */
+@import 'assets/css/richtext.min.css';
+@import 'assets/css/slicknav.min.css';
+@import 'assets/css/style.css';
+/* @import 'assets/css/style.css.map'; */
+
+
+
+
+
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
