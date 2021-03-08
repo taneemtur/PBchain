@@ -257,10 +257,8 @@ margin: 35px auto;
     display: none;
 }
 
-.wizard-card .wizard-header h3{
-    font-weight: 200;
-    text-align: center;
-}
+
+
 .wizard-card .nav-pills > li{
     text-align: center;
 }

@@ -15,12 +15,12 @@
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar>
-      <span class="text-uppercase font-weight-bold">Property Blockchain Application</span>
+      <span class="text-uppercase font-weight-bold">PBChain</span>
       <span class="example-spacer"></span>
       <button mat-button routerLink="/login" routerLinkActive="active">Sign In</button>
       <button mat-button routerLink="/register" routerLinkActive="active">Register</button>
     </mat-toolbar>
-    <!-- <mat-toolbar color="primary">
+    <!-- <mat-toolbar color="primary"> -->
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -29,8 +29,8 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon"> <img src="assets/img/icons/menu.png"> </mat-icon>
       </button>
-      <span class="text-uppercase font-weight-bold" *ngIf="current">{{current}}</span>
-    </mat-toolbar> -->
+      <!-- <span class="text-uppercase font-weight-bold" *ngIf="current">{{current}}</span> -->
+    <!-- </mat-toolbar> -->
     <router-outlet></router-outlet>
     <!-- <app-footer></app-footer> -->
   </mat-sidenav-content>

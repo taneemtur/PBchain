@@ -51,7 +51,9 @@
     .register-area {
     padding: 50px 0px;
 }
-  
+  .register-area .col-md-6 {
+        margin-bottom: 15px;
+    }
     .navbar-default .navbar-nav > li > a.active::after {
         background-color:#FFF !important; 
     }
@@ -360,7 +362,6 @@
     }
      .register-area .col-md-6 {
         margin-bottom: 15px;
-        margin-left: 100px;
     }
     .search-form{
         padding: 15px;
@@ -609,7 +610,9 @@
         bottom: -15px;
         height: 4px;
     }
-    
+      .register-area .col-md-6 {
+        margin-bottom: 15px;
+    }
     .slider-content {
         margin-left: 0px;
         padding: 35px;

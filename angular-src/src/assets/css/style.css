@@ -4484,6 +4484,20 @@ ul.social-circle-icons li a:hover {
   color: #666;
 }
 
+.wizard-card .wizard-header h3 b{
+  text-transform: uppercase;
+}
+
+.wizard-card .wizard-header h3{
+font-weight: 200;
+text-align: center;
+}
+
+.wizard-card .tab-content{
+  min-height: 340px;
+  padding: 20px 10px;
+}
+
 .store-list ul {
   list-style: none;
 }
@@ -7371,6 +7385,34 @@ label small{
   height: 44px;
   color: #FFF; 
 }
+
+
+.tab-content ul li {
+  height: 235px;
+  margin-bottom: 20px;
+  width: 219px;
+}
+.tab-content ul li a img {
+  height: 100%;
+  width: 100%;
+}
+.tab-content ul li {
+  height: 235px;
+  margin-bottom: 20px;
+  width: 219px;
+}
+.tab-content ul li a img {
+  height: 100%;
+  width: 100%;
+}
+.tab-content ul li {
+  height: 160px;
+  width: 145px;
+}
+.tab-content ul li a img{
+  width: 100%;
+  height: 100%;
+}
 /* Navigation bils */
 .wizard-container .nav-pills > li + li {
   margin-left: 0;
@@ -9005,11 +9047,21 @@ single property page
   margin: 4px;
 }
 .register-area{
-  padding: 40px;
+  /* padding: 40px; */
   /* margin-left: 50%; */
 }
 
 .register-area .col-md-6 {
+  margin-bottom: 15px;
+  margin-left: 25%;
+  /* position: relative; */
+}
+.login-area{
+  padding: 40px;
+  /* margin-left: 50%; */
+}
+
+.login-area .col-md-6 {
   margin-bottom: 15px;
   margin-left: 25%;
   position: relative;
@@ -9361,7 +9413,7 @@ padding-bottom: 15px;
 }
 /*Home page style 2 Edite */
 .home-lager-shearch .large-search {
-  padding: 25px 25px 10px;
+  /* padding: 25px 25px 10px; */
 }
 
 .home-lager-shearch .large-search .btn-lg-sheach {
@@ -9369,13 +9421,15 @@ padding-bottom: 15px;
   border-radius: 50%;
   width: 60px;
   border: 2px solid #FFF;
-  /* background-image: url("../../assets/img/icon-shearch.png"); */
+  /* background-image: url("../../as/img/icon-shearch.png"); */
+  background-image: url("../../asset/img/icon-shearch.png");
   position: relative;
   background-position: 2px -1px;
   height: 60px;
 }
 .home-lager-shearch .large-search .btn-lg-sheach:hover ,.home-lager-shearch .large-search .btn-lg-sheach:focus{
   /* background-image: url("../../assets/img/icon-shearch.png"); */
+  background-image: url("../../asset/img/icon-shearch.png");
   background-position: 2px -1px;
   background-color: #655D5D;
 } 
