@@ -44,6 +44,8 @@ import { NavbarTopComponent } from './components/navbar-top/navbar-top.component
 import { FeaturedDevelopersComponent } from './components/featured-developers/featured-developers.component';
 import { DevCardComponent } from './components/dev-card/dev-card.component';
 import { FeaturedAgencyComponent } from './components/featured-agency/featured-agency.component';
+import { NearbyPropertyComponent } from './components/nearby-property/nearby-property.component';
+import { RecentPropertyComponent } from './components/recent-property/recent-property.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +67,10 @@ import { FeaturedAgencyComponent } from './components/featured-agency/featured-a
     NavbarTopComponent,
     FeaturedDevelopersComponent,
     DevCardComponent,
-    FeaturedAgencyComponent
+    FeaturedAgencyComponent,
+    NearbyPropertyComponent,
+    RecentPropertyComponent,
+   
   ],
   imports: [
     BrowserModule,

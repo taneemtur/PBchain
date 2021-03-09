@@ -1,0 +1,8 @@
+<div class="hor">
+    <mat-card-title class="text-uppercase font-weight-bold">Recent Properties</mat-card-title>
+    <div fxLayout="row"  fxLayoutGap="15px" class="scroll" >
+        <div *ngFor="let p of properties">
+            <app-p-listing [PDetails] = "p"></app-p-listing>
+        </div>
+    </div>
+</div>
