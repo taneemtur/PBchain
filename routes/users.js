@@ -1,44 +1,103 @@
 const router = require('express').Router();
-
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+
+const secret = 'PBCHAINUSER';
 
 router.post('/register-user', (req, res, next) => {
     data = {
-        username : req.body.username,
+        userId : null,
         email : req.body.email,
-        pnum : req.body.pnum,
+        Pnum : req.body.pnum,
         name : req.body.name,
-        userType : req.body.userType,
         password : req.body.password
     }
 
-    let newUser = new User(data);
+    User.addUser(data, (err, newUser) => {
+        if(err) {
+            res.json({success : false, err : err});
+        }
 
-    User.addUser(newUser, (success, msg) => {
-        res.json({success : success, msg : msg})
+        if(newUser) {
+            res.json({
+                success : true,
+                msg : "User Successfully registered.",
+                user : {
+                    userId : newUser.userId,
+                    name : newUser.name,
+                    email : newUser.email,
+                    Pnum : newUser.Pnum
+                }
+            });
+        }
+        else {
+            res.json({success : false, err : "Failed to register user."});
+        }
+    })
+})
+
+router.post('/authenticate-user', (req, res, next) => {
+    let data = {
+        email : req.body.email,
+        password : req.body.password
+    }
+
+    User.getUserByEmail(data.email, (user) => {
+        if(user) {
+            User.comparePassword(data.password, user.password, (isMatch) => {
+                if(isMatch) {
+                    const token = jwt.sign({user}, secret, {
+                        expiresIn : 604800
+                    });
+
+                    res.json({
+                        success : true,
+                        user : {
+                            name : user.name,
+                            email : user.email,
+                            pnum : user.pnum
+                        },
+                        token : token
+                    })
+                }
+                else {
+                    res.json({success : false, err : "Incorrect password."});
+                }
+            })
+        }
+        else {
+            res.json({success : false, err : "User does not exists."});
+        }
     })
 })
 
 router.get('/profile', (req, res, next) => {
-    User.getUserByUsername(req.body.username, (success, user) => {
-        // if(user) {
-        //     res.json({success : true, user : user});
-        // }
-        // else {
-        //     res.json({success : false, user : user});
-        // }
-        res.json({success : success, msg : user})
+    User.getUserByEmail( req.body.email, (user) => {
+        if(user) {
+            res.json({
+                success : true,
+                msg : "User profile found.",
+                user : {
+                    name : user.name,
+                    email : user.email,
+                    pnum : user.pnum
+                }
+            });
+        }
+        else {
+            res.json({success : false, err : "User does not exists."});
+        }
     });
 })
 
-router.delete('/delete-user/:username', (req, res, next) => {
-    let username = req.params.username;
-    User.deleteUser(username, (success) => {
+router.delete('/delete-user/:email', (req, res, next) => {
+    let email = req.params.email;
+    User.deleteUser(email, (success) => {
         if(success) {
             res.json({success : success, msg : "User deleted"});
         }
         else {
-            res.json({success : success, msg : "User not deleted"});
+            res.json({success : success, err : "User does not exists."});
         }
     })
 })
