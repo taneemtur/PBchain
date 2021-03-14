@@ -1,40 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
-/*
-@import 'asset/css/bootstrap-select.min.css';
-@import 'asset/css/bootstrap-theme.css';
-@import 'asset/css/font-awesome.min.css';
-@import 'asset/css/fontello.css';
-@import 'asset/css/ion.rangeSlider.css';
-@import 'asset/css/jquery.slitslider.css';
-@import 'asset/css/lightslider.min.css';
-@import 'asset/css/normalize.css';
 
-@import 'asset/css/owl.transitions.css';
-
-*/
-@import 'assets/css/bootstrap.min.css';
+/* not working */
 /* @import 'assets/css/elegant-icons.css'; */
 /* @import 'assets/css/font-awesome.min.css'; */
 /* @import 'assets/css/image-uploader.min.css'; */
 /* @import 'assets/css/jquery-ui.min.css'; */
-@import 'assets/css/magnific-popup.css';
-@import 'assets/css/nice-select.css';
 /* @import 'assets/css/owl.carousel.min.css'; */
+/* @import 'assets/css/style.css.map'; */
+
+
+
+/* working css marked as comment by myself to check */
+
 @import 'assets/css/richtext.min.css';
 @import 'assets/css/slicknav.min.css';
-@import 'assets/css/style.css';
 @import 'assets/css/animate.css';
 @import 'assets/css/price-range.css';
 @import 'assets/css/responsive.css';
 @import 'assets/css/slider.css';
 @import 'assets/css/styleNoJS.css';
 @import 'assets/css/wizard.css'; 
+@import 'assets/css/bootstrap.min.css';
+@import 'assets/css/magnific-popup.css';
+@import 'assets/css/nice-select.css';
 
 
-/* @import 'assets/css/style.css.map'; */
-
-
-
+@import 'assets/css/style.css';
 
 
 
