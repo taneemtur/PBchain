@@ -3,9 +3,13 @@
     padding: 0;
 }
 .back {
-    background-image: url('/assets/img/home-back.jpg');
+    background-image: url('src/asset/img/slide1/slider-image-2.jpg');
+    height: 550px;
+
+    
 }
 .search {
     padding: 50px;
     height : 50%;
+    opacity: 85%;
 }

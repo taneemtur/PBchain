@@ -41,6 +41,11 @@ import { ProfileCardComponent } from './components/profile-card/profile-card.com
 import { FeaturedProfileComponent } from './components/featured-profile/featured-profile.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { NavbarTopComponent } from './components/navbar-top/navbar-top.component';
+import { FeaturedDevelopersComponent } from './components/featured-developers/featured-developers.component';
+import { DevCardComponent } from './components/dev-card/dev-card.component';
+import { FeaturedAgencyComponent } from './components/featured-agency/featured-agency.component';
+import { NearbyPropertyComponent } from './components/nearby-property/nearby-property.component';
+import { RecentPropertyComponent } from './components/recent-property/recent-property.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +64,13 @@ import { NavbarTopComponent } from './components/navbar-top/navbar-top.component
     ProfileCardComponent,
     FeaturedProfileComponent,
     FooterComponent,
-    NavbarTopComponent
+    NavbarTopComponent,
+    FeaturedDevelopersComponent,
+    DevCardComponent,
+    FeaturedAgencyComponent,
+    NearbyPropertyComponent,
+    RecentPropertyComponent,
+   
   ],
   imports: [
     BrowserModule,

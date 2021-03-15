@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { User } from '../../interfaces/userInterface'
+import { RegisterService } from '../../services/register.service';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +27,11 @@ export class RegisterComponent implements OnInit {
 
   userTypes = ["Indivisual", "Agent", "Developer"]
 
-  constructor(private _snackBar : MatSnackBar, private router : Router) { }
+  constructor(
+    private _snackBar : MatSnackBar, 
+    private router : Router, 
+    private  registerService : RegisterService
+    ) { }
 
   ngOnInit(): void {
   }
@@ -40,18 +45,82 @@ export class RegisterComponent implements OnInit {
       typeDetails : {},
       password : this.password
     }
+console.log(this.userType, data, "dasda")
+    if(this.userType == "Developer") {
+      
+      let developer = {
+        angencyName : this.typeDetails.orgName,
+        agencyCity : this.typeDetails.orgCity,
+        agencyEmail : this.typeDetails.orgEmail,
+        agencyPnum : this.typeDetails.orgNum,
+        agencyAdd : this.typeDetails.orgAdd,
+        repName : this.name,
+        repEmail : this.email,
+        password : this.password
+      }
 
-    if(this.userType != "Indivisiual") {
-      data.typeDetails = this.typeDetails
+
     }
+    else if (this.userType == "Agent") {
+      let agency = {
+        agencyName : this.typeDetails.orgName,
+        agencyCity : this.typeDetails.orgCity,
+        agencyEmail : this.typeDetails.orgEmail,
+        agencyPnum : this.typeDetails.orgNum,
+        agencyAdd : this.typeDetails.orgAdd,
+        agentName : this.name,
+        agentEmail : this.email,
+        agentPnum : this.pnum,
+        password : this.password
+      }
 
-    this._snackBar.open("Successfully Registered.", "", {
-      duration: 2000,
-    });
+      this.registerService.registerAgency(agency)
+        .subscribe(res => {
+          console.log(res)
+          if(res.success) {
+            this._snackBar.open("Successfully Registered Agent.", "", {
+              duration: 2000,
+            });
+        
+            this.router.navigate(['/login'])
+          }
+          else {
+            this._snackBar.open("Failed to Register Agent.", "", {
+              duration: 2000,
+            });
+          }
+        })
+    }
+    else {
+      
 
-    console.log(data)
-
-    this.router.navigate(['/login'])
+      let user = {
+        name : this.name,
+        email : this.email,
+        pnum : this.pnum,
+        password : this.password,
+      }
+  
+      console.log(user);
+  
+      this.registerService.registerUser(user)
+        .subscribe(res => {
+          if(res.success) {
+            this._snackBar.open("Successfully Registered.", "", {
+              duration: 2000,
+            });
+        
+            this.router.navigate(['/login'])
+          }
+          else {
+            this._snackBar.open("Failed to Register User.", "", {
+              duration: 2000,
+            });
+          }
+        })
+    }
+    
+    
   }
 
 }
