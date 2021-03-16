@@ -9,6 +9,10 @@ import { PDetailsComponent } from './components/p-details/p-details.component';
 import { PListingComponent } from './components/p-listing/p-listing.component'
 import { ProfileComponent } from './components/profile/profile.component';
 import { RegisterComponent } from './components/register/register.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { BlogsComponent } from './components/blogs/blogs.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
+
 
 
 const routes: Routes = [
@@ -18,7 +22,11 @@ const routes: Routes = [
   {path : 'property-details', component : PDetailsComponent},
   {path : 'register', component : RegisterComponent},
   {path : 'login', component : LoginComponent},
-  {path : 'profile', component : ProfileComponent}
+  {path : 'profile', component : ProfileComponent},
+  {path : 'contact', component : ContactComponent},
+  {path : 'blogs', component : BlogsComponent},
+  {path : 'calculator', component : CalculatorComponent}
+
 ];
 
 @NgModule({

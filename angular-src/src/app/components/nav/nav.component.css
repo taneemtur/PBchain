@@ -22,3 +22,12 @@
   flex: 1 1 auto;
 }
 
+.mat-list-item{
+  padding: 1pc;
+  position: relative;
+}
+
+.slogan{
+  margin-top: 5pc;
+  margin-left: -5.66pc;
+}

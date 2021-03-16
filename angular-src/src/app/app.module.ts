@@ -46,6 +46,9 @@ import { DevCardComponent } from './components/dev-card/dev-card.component';
 import { FeaturedAgencyComponent } from './components/featured-agency/featured-agency.component';
 import { NearbyPropertyComponent } from './components/nearby-property/nearby-property.component';
 import { RecentPropertyComponent } from './components/recent-property/recent-property.component';
+import { BlogsComponent } from './components/blogs/blogs.component';
+import { ContactComponent } from './components/contact/contact.component';
+import { CalculatorComponent } from './components/calculator/calculator.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +73,9 @@ import { RecentPropertyComponent } from './components/recent-property/recent-pro
     FeaturedAgencyComponent,
     NearbyPropertyComponent,
     RecentPropertyComponent,
+    BlogsComponent,
+    ContactComponent,
+    CalculatorComponent,
    
   ],
   imports: [
