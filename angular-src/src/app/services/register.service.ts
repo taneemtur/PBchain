@@ -20,4 +20,9 @@ export class RegisterService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.post<any>('http://localhost:3000/agency/add-agency', data, {headers : headers})
   }
+
+  registerDeveloper (data) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>('http://localhost:3000/developer/add-developer', data, {headers : headers})
+  }
 }

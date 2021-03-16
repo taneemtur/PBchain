@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   email : String;
   password : String;
+  userTypes = ["Indivisual", "Agent"]
+  userType : String;
 
   constructor(private _snackBar : MatSnackBar, private router : Router) { }
 
@@ -22,6 +24,13 @@ export class LoginComponent implements OnInit {
     let data = {
       "name" : this.email,
       "password" : this.password
+    }
+
+    if(this.userType == "Indivisual") {
+      
+    }
+    else {
+
     }
 
     this._snackBar.open("Successfully Logged In.", "", {

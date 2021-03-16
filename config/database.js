@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 
-const conn = new Sequelize('test2', 'root', '', {
+const conn = new Sequelize('pbchain', 'root', '', {
     host: 'localhost',
     dialect: 'mysql',
     port : 3306

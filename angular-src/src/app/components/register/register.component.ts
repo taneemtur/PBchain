@@ -49,17 +49,33 @@ console.log(this.userType, data, "dasda")
     if(this.userType == "Developer") {
       
       let developer = {
-        angencyName : this.typeDetails.orgName,
-        agencyCity : this.typeDetails.orgCity,
-        agencyEmail : this.typeDetails.orgEmail,
-        agencyPnum : this.typeDetails.orgNum,
-        agencyAdd : this.typeDetails.orgAdd,
-        repName : this.name,
-        repEmail : this.email,
+        developerName : this.typeDetails.orgName,
+        developerCity : this.typeDetails.orgCity,
+        developerEmail : this.typeDetails.orgEmail,
+        developerPnum : this.typeDetails.orgNum,
+        developerAdd : this.typeDetails.orgAdd,
+        agentName : this.name,
+        agentEmail : this.email,
+        agentPnum : this.pnum,
         password : this.password
       }
 
-
+      this.registerService.registerDeveloper(developer)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this._snackBar.open("Successfully registered developer.", "", {
+            duration: 2000,
+          });
+      
+          this.router.navigate(['/login'])
+        }
+        else {
+          this._snackBar.open("Failed to register developer.", "", {
+            duration: 2000,
+          });
+        }
+      })
     }
     else if (this.userType == "Agent") {
       let agency = {

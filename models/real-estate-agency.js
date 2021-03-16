@@ -17,11 +17,9 @@ const AgencyModel = conn.define('real-estate-agency', {
     agencyCity : sequelize.STRING
 });
 
-AgencyModel.hasMany(Agent);
-Agent.belongsTo(AgencyModel);
+AgencyModel.hasOne(Agent);
 
 AgencyModel.hasMany(PropertyModel);
-PropertyModel.belongsTo(AgencyModel)
 
 module.exports.addAgency = async (agencyData, callback) => {
     agencyData.agencyId = (agencyData.agencyName.substring(0, 3)).toUpperCase() + (agencyData.agencyCity.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*(999-100+1)+100);

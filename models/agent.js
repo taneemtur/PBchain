@@ -2,7 +2,7 @@ const sequelize = require('sequelize');
 const conn = require('../config/database');
 const bcrypt = require('bcrypt')
 
-module.exports = AgentModel = conn.define('real-estate-agent', {
+module.exports = AgentModel = conn.define('agent', {
     agentId : sequelize.STRING,
     agentName : sequelize.STRING,
     agentEmail : sequelize.STRING,
