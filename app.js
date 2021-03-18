@@ -20,8 +20,8 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json())
 
-conn.sync({force : true})
-// conn.sync()
+// conn.sync({force : true})
+conn.sync()
 
 const users = require('./routes/users');
 app.use('/user', users);

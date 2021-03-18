@@ -21,12 +21,13 @@
 
   
 
-
+<!-- 
 <div class="profile">
     
     <mat-card class="profile-card">
-        <img mat-card-image src="assets/img/team/team-1.jpg">
-        <mat-card-content>
+        <mat-card-title>User Profile</mat-card-title>
+            <img mat-card-image src="assets/img/team/team-1.jpg">
+        <mat-card-content class="content-container">
             <ul>
                 <li><h3>Name : {{user.name}} </h3></li>
                 <li><h3>Email : {{user.email}} </h3></li>
@@ -36,6 +37,36 @@
         </mat-card-content>
     </mat-card>
 
+</div> -->
+
+<div class="profile">
+    <mat-card class="example-card">
+        <mat-card-header>
+            <mat-card-title>User Profile</mat-card-title>        
+        </mat-card-header>
+        <img mat-card-image src="assets/img/team/team-1.jpg">
+        <mat-card-content class="content-container">
+            <ul>
+                <li><h3>User Profile ID : {{user.userId}} </h3></li>
+                <li><h3>Name : {{user.name}} </h3></li>
+                <li><h3>Email : {{user.email}} </h3></li>
+                <li><h3>Phone Number : {{user.pnum}} </h3></li>
+                <li><h3>Joined : {{user.createdAt}} </h3></li>
+            </ul>
+        </mat-card-content>
+
+      </mat-card>
+
+</div>
+
+
+<div class="hor">
+    <mat-card-title class="text-uppercase font-weight-bold">Added Properties</mat-card-title>
+    <div fxLayout="row"  fxLayoutGap="15px" class="scroll" >
+        <div *ngFor="let p of [1,2,3,4,5,6,7]">
+            <app-p-listing ></app-p-listing>
+        </div>
+    </div>
 </div>
 
 <!-- <div layout="row">
@@ -44,4 +75,7 @@
                   
     </div>
     </div> -->
+
+
+
     <app-footer></app-footer>

@@ -85,6 +85,23 @@ class PropertyAssetContract extends UserContract {
         await ctx.stub.putState(assetKey, buffer);
     }
 
+    async transferPropertyOwnership(ctx, propertyAssetId, owner, newOwner) {
+        const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
+        const propertyBytes = await ctx.stub.getState(assetKey); 
+        if (!propertyBytes || propertyBytes.length === 0) {
+            throw new Error(`${propertyAssetId} does not exist`);
+        }
+        const property = JSON.parse(propertyBytes.toString());
+        property.owner = newOwner;
+
+        await ctx.stub.putState(assetKey, Buffer.from(JSON.stringify(property)));
+
+        const transferEvent = { owner, newOwner, propertyId: property.PropertyAssetId };
+        ctx.stub.setEvent('Transfer', Buffer.from(JSON.stringify(transferEvent)));
+
+        return true;
+    }
+
     async deletePropertyAsset(ctx, propertyAssetId, owner) {
         const assetKey = ctx.stub.createCompositeKey(owner, [propertyAssetId]);
         const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);

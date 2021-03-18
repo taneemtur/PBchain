@@ -19,4 +19,14 @@ export class PropertyService {
       }
     })
   }
+
+  addProperty (propertyData) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>('http://localhost:3000/property/add-property', propertyData, {headers : headers})
+  }
+
+  getAllProperties () {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>('http://localhost:3000/property/all-properties', {headers : headers})
+  }
 }

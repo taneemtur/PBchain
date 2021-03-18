@@ -29,6 +29,17 @@ router.post('/add-property', (req, res, next) => {
     })
 });
 
+router.get('/all-properties', (req, res, next) => {
+    Property.getAllProperties((err, property) => {
+        if(err) {
+            res.json({success : false, err : err, msg : "Failed to find property"});
+        }
+        else {
+            res.json({success : true, property : property});
+        }
+    });
+})
+
 router.get('/find-by-id/:id', (req, res, next) => {
     Property.getPropertyById(req.params.id, (err, property) => {
         if(err) {

@@ -108,8 +108,8 @@
 
 <mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>Property For {{propertyDetails.purpose}}</mat-card-title>
-      <mat-card-subtitle>Property in {{propertyDetails.city}}</mat-card-subtitle>
+      <mat-card-title>Property For {{propertyDetails.propertyPurpose}}</mat-card-title>
+      <mat-card-subtitle>Property in {{propertyDetails.propertyCity}}</mat-card-subtitle>
       <span fxFlex></span>
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>
@@ -128,13 +128,13 @@
     <img mat-card-image src="assets/img/property/property-2.jpg">
     <mat-card-content class="content-container">
       <ul>
-        <li>Bedroom : {{propertyDetails.bedroom}}</li>
-        <li>Washroom : {{propertyDetails.washroom}}</li>
-        <li>Area : {{propertyDetails.propertyArea}} Sq. Feet</li>
-        <li>Price : {{propertyDetails.cost}}</li>
+        <li>Bedroom : {{propertyDetails.propertyBedrooms}}</li>
+        <li>Washroom : {{propertyDetails.propertyWashrooms}}</li>
+        <li>Price : {{propertyDetails.propertyCost}}</li>
     </ul>
+    <p>{{propertyDetails.propertyDescription}}</p>
     </mat-card-content>
     <mat-card-actions class="action-container" >
-      <button mat-button color="primary" class="submit-button">See Details</button>
+      <button mat-button class="btn btn-default" (click)="seePropertyDetails()">See Details</button>
     </mat-card-actions>
   </mat-card>

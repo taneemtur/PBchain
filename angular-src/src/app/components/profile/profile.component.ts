@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/userInterface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -8,14 +9,12 @@ import { User } from '../../interfaces/userInterface';
 })
 export class ProfileComponent implements OnInit {
 
-  user  = {
-    name : "usr1",
-    email : "usr1@pbchain.com",
-    pnum : 123456789,
-    userType : "Real Estate Agent",
-  }
+  user = undefined
 
-  constructor() { }
+  constructor(private router : Router) { 
+    this.user = this.router.getCurrentNavigation().extras.state.user;
+    console.log(this.user)
+  }
 
   ngOnInit(): void {
   }

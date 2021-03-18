@@ -2,10 +2,12 @@ ngb-carousel {
     max-width: 80%;
     margin: 50px auto;
     align-items: center;
+    text-align: center;
 }
 
 ngb-carousel img {
-    width: 100%;
+    width: 500px;
+    height : auto;
     outline: none;
 }
 
@@ -54,5 +56,19 @@ ngb-carousel {
   }
   
   .content-container li {
+    margin : 10px;
+  }
+
+
+  mat-card {
+    margin : 100px;
+  }
+ 
+  .form {
+    padding : 10px;
+    text-align: center;
+  }
+ 
+  .form mat-form-field {
     margin : 10px;
   }

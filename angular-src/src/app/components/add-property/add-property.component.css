@@ -1,4 +1,4 @@
-.form {
+/* .form {
     top: 0;
     margin: 0;
     padding: 0;
@@ -38,4 +38,17 @@
     width: 80%;
     margin: 20px auto;
   }
+ */
 
+ mat-card {
+   margin : 100px;
+ }
+
+ .form {
+   padding : 10px;
+   text-align: center;
+ }
+
+ .form mat-form-field {
+   margin : 10px;
+ }

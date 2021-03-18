@@ -49,13 +49,15 @@ router.post('/authenticate-user', (req, res, next) => {
                     const token = jwt.sign({user}, secret, {
                         expiresIn : 604800
                     });
-
+                    console.log(user);
                     res.json({
                         success : true,
                         user : {
+                            userId : user.userId,
                             name : user.name,
                             email : user.email,
-                            pnum : user.pnum
+                            pnum : user.Pnum,
+                            createdAt : user.createdAt,
                         },
                         token : token
                     })

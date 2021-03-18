@@ -71,6 +71,16 @@ module.exports.addProperty = (propertyData, callback) => {
     })
 }
 
+module.exports.getAllProperties = (callback) => {
+    PropertyModel.findAll()
+    .then(property => {
+        callback(undefined, property);
+    })
+    .catch(err => {
+        callback(err, undefined);
+    })
+}
+
 module.exports.getPropertyById = (propertyId, callback) => {
     PropertyModel.findOne({ where : {propertyId : propertyId}})
     .then(property => {
@@ -87,7 +97,7 @@ module.exports.getPropertyByType = (propertyType, callback) => {
         callback(undefined, property);
     })
     .catch(err => {
-        throw(err);
+        callback(err, undefined);
     })
 }
 
@@ -97,7 +107,7 @@ module.exports.getPropertyByCity = (propertyCity, callback) => {
         callback(undefined, property);
     })
     .catch(err => {
-        throw(err);
+        callback(err, undefined);
     })
 }
 
@@ -107,7 +117,7 @@ module.exports.getPropertyByLocation = (propertyLocation, callback) => {
         callback(undefined, property);
     })
     .catch(err => {
-        throw(err);
+        callback(err, undefined);
     })
 }
 
@@ -117,7 +127,7 @@ module.exports.getPropertyByPurpose = (propertyPurpose, callback) => {
         callback(undefined, property);
     })
     .catch(err => {
-        throw(err);
+        callback(err, undefined);
     })
 }
 
@@ -143,6 +153,6 @@ module.exports.getPropertyBySearchQuery = (searchQuery, callback) => {
         callback(undefined, property);
     })
     .catch(err => {
-        throw(err);
+        callback(err, undefined);
     })
 }

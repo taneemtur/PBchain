@@ -1,34 +1,88 @@
-<div class="container">
+<div class="header-connect">
+            
+  <div class="col-md-5 col-sm-8  col-xs-12">
+      <div class="header-half header-call">
+          <p>
+              <span><i class="pe-7s-call"></i> +1 234 567 7890</span>
+              <span><i class="pe-7s-mail"></i> info@pbchain.com</span>
+          </p>
+      </div>
+  </div>
+</div>      
+
+
+<div class="page-head"> 
+  <div class="container">
+      <div class="row">
+          <div class="page-head-content">
+              <h1 class="page-title">Property Details </h1>               
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
   <ngb-carousel>
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
-        <img src="assets/img/property/p1.jpg" alt="Angular Carousel 1">
-      </div>
-      <div class="carousel-caption">
-        <h3>Title Goes Here</h3>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <img src="assets/img/property/property-1.jpg" alt="Angular Carousel 1">
       </div>
     </ng-template>
     <ng-template ngbSlide>
       <div class="picsum-img-wrapper">
         <img src="assets/img/property/property-2.jpg" alt="Angular Carousel 2">
       </div>
-      <div class="carousel-caption">
-        <h3>Title Goes Here</h3>
-        <p>Consectetur tortor volutpat pretium.</p>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/img/property/property-3.jpg" alt="Angular Carousel 2">
       </div>
     </ng-template>
-  </ngb-carousel>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/img/property/property-4.jpg" alt="Angular Carousel 2">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/img/property/property-5.jpg" alt="Angular Carousel 2">
+      </div>
+    </ng-template>
+    <ng-template ngbSlide>
+      <div class="picsum-img-wrapper">
+        <img src="assets/img/property/property-6.jpg" alt="Angular Carousel 2">
+      </div>
+    </ng-template>
 
-  <mat-card>
-    <div class="content-container">
+    <!-- <div *ngFor="let num of [1,2,3,4,5,6,7,8,9]">
+      <ng-template ngbSlide>
+        <div class="picsum-img-wrapper">
+          <img src="{{ 'assets/img/property/property-'+num+'.jpg' }}" alt="Angular Carousel 1">
+        </div>
+      </ng-template>
+    </div> -->
+  </ngb-carousel>
+<div class="">
+  
+  <mat-card class="content-container">
+    <mat-card-header>
+      <mat-card-title>Property Details</mat-card-title>
+    </mat-card-header>
       <ul>
-          <li>Bedroom : 100</li>
-          <li>Washroom : 100</li>
-          <li>Location : Under Water</li>
-          <li>Price : Rs. 0</li>
+        <li> Property ID: {{ propertyDetails.propertyId }}</li>
+        <li> City : {{ propertyDetails.propertyCity }}</li>
+        <li> Location : {{ propertyDetails.propertyLocation }}</li>
+        <li> Property Type : {{ propertyDetails.propertyType }}</li>
+        <li> Bedrooms : {{ propertyDetails.propertyBedrooms }}</li>
+        <li> Washrooms : {{ propertyDetails.propertyWashrooms }}</li>
+        
+        <li> Address : {{  propertyDetails.propertyAddress }}</li>
+        <li> Purpose : {{ propertyDetails.propertyPurpose }}</li>
       </ul>
-    </div>
+      <p> {{propertyDetails.propertyDescription }}</p>
+    
   </mat-card>
   
 </div>
+  <app-footer></app-footer>

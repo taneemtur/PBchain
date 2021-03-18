@@ -32,62 +32,78 @@
     
       <div class="register-area">
       <div class="col-md-12 col-xs-12 register-blocks">
-        <form class="form">    
+        <form class="form" (submit)="onSubmit()">    
     <mat-card-title class="title">
         <h2>Property Details</h2>
     </mat-card-title>
 
+    <mat-form-field>
+      <mat-label>Purpose</mat-label>
+      <mat-select [(ngModel)]="purpose" name="type">
+        <mat-option *ngFor="let type of ['Sale', 'Rent']" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Property Type</mat-label>
+      <mat-select [(ngModel)]="selectedPropertyType" name="type">
+        <mat-option *ngFor="let type of propertyTypes" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
        <mat-form-field>
         <mat-label>City</mat-label>
-        <mat-select [(ngModel)]="selectedCity" name="selectedCity">
-          <mat-option *ngFor="let city of cities" [value]="city">
-            {{city}}
-          </mat-option>
-        </mat-select>
+        <input matInput type="text" [(ngModel)]="selectedCity" name="selectedCity">
       </mat-form-field>
-
+      
       <mat-form-field>
         <mat-label>Location</mat-label>
         <input matInput type="text" [(ngModel)]="location" name="location">
       </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>Property Type</mat-label>
-        <mat-select [(ngModel)]="selectedPropertyType" name="type">
-          <mat-option *ngFor="let type of propertyTypes" [value]="type">
-            {{type}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
         <mat-form-field>
           <mat-label>Property Area (Sq. Feet)</mat-label>
-          <input matInput type="number"  name="area">
+          <input matInput type="number"  [(ngModel)]="area" name="area">
         </mat-form-field>
 
       <mat-form-field>
         <mat-label>Bedrooms</mat-label>
-        <input matInput type="number"  name="bedroom">
+        <input matInput type="number"  [(ngModel)]="bedroom" name="bedroom">
       </mat-form-field>
 
       <mat-form-field>
         <mat-label>Extra Rooms</mat-label>
-        <input matInput type="number"  name="extraRooms">
+        <input matInput type="number"  [(ngModel)]="extraRooms" name="extraRooms">
       </mat-form-field>
 
       <mat-form-field>
       <mat-label>Washroom</mat-label>
-      <input matInput type="number"  name="washroom">
+      <input matInput type="number" [(ngModel)]="washroom" name="washroom">
     </mat-form-field>
 
     <mat-form-field>
     <mat-label>Price</mat-label>
-    <input matInput type="number"  name="price">
+    <input matInput type="number"  [(ngModel)]="price" name="price">
   </mat-form-field>
 
+  <mat-form-field>
+    <mat-label>Address</mat-label>
+    <input matInput type="text"  [(ngModel)]="address" name="address">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput type="textbox"  [(ngModel)]="description" name="description"> </textarea>
+  </mat-form-field>
   <!-- <button mat-button color="primary" class="submit-button" type="submit">Add Property</button> -->
   <div class="text-center">
-    <button type="submit" class="btn btn-default"> Submit</button>
+    <button mat-button type="submit" class="btn btn-default"> Submit</button>
     
 </div>
 </form>
