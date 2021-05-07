@@ -60,15 +60,15 @@ module.exports = PropertyModel = conn.define('property', {
     propertyTotalRooms : sequelize.INTEGER,
 });
 
-module.exports.addProperty = (propertyData, callback) => {
+module.exports.addProperty = async (propertyData) => {
     propertyData.propertyId = (propertyData.propertyCity.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*90000) + 10000;
-    PropertyModel.create(propertyData)
-    .then(newProperty => {
-        callback(undefined, newProperty);
-    })
-    .catch(err => {
-        throw(err);
-    })
+
+    try {
+        return await PropertyModel.create(propertyData)
+    }
+    catch (err) {
+        throw err;
+    }
 }
 
 module.exports.getAllProperties = (callback) => {
@@ -81,14 +81,15 @@ module.exports.getAllProperties = (callback) => {
     })
 }
 
-module.exports.getPropertyById = (propertyId, callback) => {
-    PropertyModel.findOne({ where : {propertyId : propertyId}})
-    .then(property => {
-        callback(undefined, property);
-    })
-    .catch(err => {
-        throw(err);
-    })
+module.exports.getPropertyById = async (propertyId) => {
+    try {
+        let property = await PropertyModel.findOne({ where : {propertyId : propertyId}});
+        return property;
+    }
+    catch(err) {
+        throw err;
+    }
+    
 }
 
 module.exports.getPropertyByType = (propertyType, callback) => {
@@ -155,4 +156,17 @@ module.exports.getPropertyBySearchQuery = (searchQuery, callback) => {
     .catch(err => {
         callback(err, undefined);
     })
+}
+
+module.exports.updatePropertyOwner = async (propertyId, newOwner) => {
+    try {
+        let property = await this.getPropertyById(propertyId);
+        property.userUserId = newOwner;
+        property.save();
+        
+        return property; 
+    }
+    catch (err) {
+        throw err;
+    }
 }

@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const Property = require('../models/property');
+const AppUtils = require('../utils/AppUtils');
 
-router.post('/add-property', (req, res, next) => {
+router.post('/add-property', async (req, res, next) => {
     let data = {
         propertyId : null,
         propertyType : req.body.propertyType,
@@ -19,14 +20,25 @@ router.post('/add-property', (req, res, next) => {
         realEstateAgencyAgencyId : req.body.realEstateAgencyAgencyId,
     }
 
-    Property.addProperty(data, (err, newProperty) => {
-        if(err) {
-            res.json({success : false, err : err, msg : "Failed to add property"});
-        }
-        else {
+    
+
+    try {
+        const newProperty = await Property.addProperty(data)
+        const ccp = AppUtils.buildCCPOrg1();
+        const contract = await AppUtils.connectToNetwork('Org1', ccp, 'mychannel', 'PropertyAssetContract', 'admin')
+        data.propertyId = newProperty.propertyId;
+        console.log(data.toString())
+        contract.submitTransaction('createPropertyAsset', newProperty.propertyId, JSON.stringify(data), 'admin')
+        .then(() => {
             res.json({success : true, msg : "Property added", property : newProperty});
-        }
-    })
+        })
+        .catch(err => {
+            res.json({success : false, err : err, msg : "Failed to add property"});
+        })
+    }
+    catch(err) {
+        res.json({success : false, err : err, msg : "Failed to add property"});
+    }
 });
 
 router.get('/all-properties', (req, res, next) => {
@@ -139,6 +151,20 @@ router.get('/find-by-query', (req, res, next) => {
             }
         }
     });
+})
+
+router.post('/transfer-property/:propertyId', async (req, res, next) => {
+    let propertyId = req.params.propertyId;
+    let newOwner = req.body.newOwner;
+
+    try {
+        let property = await Property.updatePropertyOwner(propertyId, newOwner);
+        console.log(property)
+    }
+    catch (err) {
+        console.error(err);
+        res.json({success : false, err : "Failed to find properties."});
+    }
 })
 
 module.exports = router;

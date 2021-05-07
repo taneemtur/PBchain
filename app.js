@@ -4,7 +4,7 @@ const config = require('./config/db');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const conn = require('./config/database');
-
+const AppUtils = require('./utils/AppUtils');
 const app = express();
 
 
@@ -20,8 +20,21 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json())
 
+// (async () => {
+//     await AppUtils.enrollAdminPbchain('org1admin', 'org1');
+// })();
+
+AppUtils.enrollAdminPbchain('admin', 'adminpw')
+ .then(() => {
+     console.log("Successful");
+ })
+ .catch(err => {
+     console.error(err);
+ })
 // conn.sync({force : true})
 conn.sync()
+
+
 
 const users = require('./routes/users');
 app.use('/user', users);

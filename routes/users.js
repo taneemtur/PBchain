@@ -1,10 +1,12 @@
 const router = require('express').Router();
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
+const AppUtils = require('../utils/AppUtils');
+
 
 const secret = 'PBCHAINUSER';
 
-router.post('/register-user', (req, res, next) => {
+router.post('/register-user', async (req, res, next) => {
     data = {
         userId : null,
         email : req.body.email,
@@ -13,27 +15,45 @@ router.post('/register-user', (req, res, next) => {
         password : req.body.password
     }
 
-    User.addUser(data, (err, newUser) => {
-        if(err) {
-            res.json({success : false, err : err});
-        }
-
-        if(newUser) {
-            res.json({
-                success : true,
-                msg : "User Successfully registered.",
-                user : {
-                    userId : newUser.userId,
-                    name : newUser.name,
-                    email : newUser.email,
-                    Pnum : newUser.Pnum
+    try {
+        const ccp = AppUtils.buildCCPOrg1();
+        const walletPath = AppUtils.getWalletPath("Org1");
+        const wallet = await AppUtils.buildWallet(walletPath);
+        const ca = AppUtils.getCA('ca.org1.example.com', ccp);
+        AppUtils.registerAndEnrollUser(ca, wallet, 'Org1MSP', data.email, '')
+        .then(() => {
+            User.addUser(data, (err, newUser) => {
+                if(err) {
+                    res.json({success : false, err : err});
                 }
-            });
-        }
-        else {
+    
+                if(newUser) {
+                    res.json({
+                        success : true,
+                        msg : "User Successfully registered.",
+                        user : {
+                            userId : newUser.userId,
+                            name : newUser.name,
+                            email : newUser.email,
+                            Pnum : newUser.Pnum
+                        }
+                    });
+                }
+                else {
+                    res.json({success : false, err : "Failed to register user."});
+                }
+            })
+        })
+        .catch (err => {
+            console.error(err);
             res.json({success : false, err : "Failed to register user."});
-        }
-    })
+        })
+        
+    }
+    catch (err) {
+        console.error(err);
+        res.json({success : false, err : "Failed to register user."});
+    }
 })
 
 router.post('/authenticate-user', (req, res, next) => {

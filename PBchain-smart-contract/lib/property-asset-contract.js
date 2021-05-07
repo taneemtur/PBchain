@@ -1,4 +1,3 @@
-
 'use strict';
 
 const { Contract } = require('fabric-contract-api');
@@ -49,8 +48,10 @@ class PropertyAssetContract extends UserContract {
     }
 
     async createPropertyAsset(ctx, propertyAssetId, data, owner) {
+        // const propertyAssetData = JSON.parse(data)
+        console.log(data.type, data);
         const propertyAssetData = JSON.parse(data)
-        console
+        // console
         const exists = await this.propertyAssetExists(ctx, propertyAssetId, owner);
         if (exists) {
             throw new Error(`The property asset ${propertyAssetId} already exists`);
