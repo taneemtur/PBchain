@@ -34,7 +34,8 @@ export class LoginComponent implements OnInit {
           this._snackBar.open("Successfully Logged In.", "", {
             duration: 2000,
           });
-      
+
+          this.loginService.nextUser(res.user);
           this.router.navigate(['/profile'], { state : { user : res.user}})
         }
         else {

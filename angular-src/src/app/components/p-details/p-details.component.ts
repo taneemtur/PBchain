@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { PropertyService } from 'src/app/services/property.service';
 @Component({
   selector: 'app-p-details',
   templateUrl: './p-details.component.html',
@@ -25,12 +27,42 @@ export class PDetailsComponent implements OnInit {
     userUserId: null
   }
 
-  constructor(private router : Router) { 
+   user : any;
+
+  offeredAmount : Number;
+  constructor(
+    private router : Router,
+    private propertyService : PropertyService,
+    private loginService : LoginService
+    ) { 
     this.propertyDetails = this.router.getCurrentNavigation().extras.state.propertyDetails;
   }
 
   ngOnInit(): void {
-    
+    this.loginService.getData()
+      .subscribe(user => {
+        this.user = user;
+      })
   }
+
+  placeBuyRequest () {
+    let req = {
+      amount : this.offeredAmount,
+      propertyId : this.propertyDetails.propertyId,
+      userId : this.user.userId
+    }
+
+    this.propertyService.placeBuyRequest(req)
+     .subscribe(res => {
+       if(res.success) {
+         console.log(res)
+       }
+       else {
+         console.log(res)
+       }
+     })
+  }
+
+
 
 }

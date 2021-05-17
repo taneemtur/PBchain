@@ -1,0 +1,119 @@
+<div class="header-connect">
+            
+    <div class="col-md-5 col-sm-8  col-xs-12">
+        <div class="header-half header-call">
+            <p>
+                <span><i class="pe-7s-call"></i> +1 234 567 7890</span>
+                <span><i class="pe-7s-mail"></i> info@pbchain.com</span>
+            </p>
+        </div>
+    </div>
+  </div>      
+  
+  
+  <div class="page-head"> 
+    <div class="container">
+        <div class="row">
+            <div class="page-head-content">
+                <h1 class="page-title">Organization Sign Up </h1>               
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+<mat-card >
+    <div >
+      <mat-tab-group class="register" mat-align-tabs="center">
+  
+              <mat-tab label="Real Estate Organization Sign Up">
+                  
+  
+                  <div class="signup">
+                    <form (submit)="onSubmitAgency()">
+  
+                        <mat-form-field>
+                            <mat-label>Agency Name</mat-label>
+                            <input matInput type="text" [(ngModel)]="orgName" name="orgName">
+                            </mat-form-field>
+                          
+                            <mat-form-field>
+                              <mat-label>Agency City</mat-label>
+                              <input matInput type="text" [(ngModel)]="orgCity" name="orgCity">
+                              </mat-form-field>
+                        
+                              <mat-form-field>
+                                <mat-label>Agency Email</mat-label>
+                                <input matInput type="text" [(ngModel)]="orgEmail" name="orgEmail">
+                                </mat-form-field>
+                          
+                                <mat-form-field>
+                                  <mat-label>Agency Address</mat-label>
+                                  <input matInput type="text" [(ngModel)]="orgAddress" name="orgAddress">
+                                  </mat-form-field>
+                        
+                                  <mat-form-field>
+                                    <mat-label>Agency Phone Number</mat-label>
+                                    <input matInput type="number" [(ngModel)]="orgNum" name="orgNum">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <mat-label>Account Password</mat-label>
+                                        <input matInput type="password" [(ngModel)]="password" name="password">
+                                        </mat-form-field>
+                                             
+                        <button mat-button type="submit" class="btn btn-default"> Register</button>
+                    </form>
+  
+                  </div>
+            </mat-tab>
+  
+            <mat-tab label="Developer Organization Sign Up">
+              <div class="signup">
+                <form class="form" (submit)="onSubmitDeveloper()">
+  
+  
+                    <mat-form-field>
+                        <mat-label>Developer Name</mat-label>
+                        <input matInput type="text" [(ngModel)]="orgName" name="orgName">
+                        </mat-form-field>
+                      
+                        <mat-form-field>
+                          <mat-label>Developer City</mat-label>
+                          <input matInput type="text" [(ngModel)]="orgCity" name="orgCity">
+                          </mat-form-field>
+                    
+                          <mat-form-field>
+                            <mat-label>Developer Email</mat-label>
+                            <input matInput type="text" [(ngModel)]="orgEmail" name="orgEmail">
+                            </mat-form-field>
+                      
+                            <mat-form-field>
+                              <mat-label>Developer Address</mat-label>
+                              <input matInput type="text" [(ngModel)]="orgAddress" name="orgAddress">
+                              </mat-form-field>
+                    
+                              <mat-form-field>
+                                <mat-label>Developer Phone Number</mat-label>
+                                <input matInput type="number" [(ngModel)]="orgNum" name="orgNum">
+                                </mat-form-field>
+
+                                <mat-form-field>
+                                    <mat-label>Account Password</mat-label>
+                                    <input matInput type="password" [(ngModel)]="password" name="password">
+                                    </mat-form-field>
+                    
+                    <button mat-button type="submit" class="btn btn-default"> Register</button>
+                </form>
+  
+                
+              </div>
+          </mat-tab>
+              
+  
+      </mat-tab-group>
+  </div>
+  </mat-card>
+
+
+  <app-footer></app-footer>

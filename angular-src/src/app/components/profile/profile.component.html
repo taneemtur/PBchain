@@ -39,35 +39,259 @@
 
 </div> -->
 
-<div class="profile">
-    <mat-card class="example-card">
-        <mat-card-header>
-            <mat-card-title>User Profile</mat-card-title>        
-        </mat-card-header>
-        <img mat-card-image src="assets/img/team/team-1.jpg">
-        <mat-card-content class="content-container">
-            <ul>
-                <li><h3>User Profile ID : {{user.userId}} </h3></li>
-                <li><h3>Name : {{user.name}} </h3></li>
-                <li><h3>Email : {{user.email}} </h3></li>
-                <li><h3>Phone Number : {{user.pnum}} </h3></li>
-                <li><h3>Joined : {{user.createdAt}} </h3></li>
-            </ul>
-        </mat-card-content>
 
-      </mat-card>
-
-</div>
 
 
 <div class="hor">
-    <mat-card-title class="text-uppercase font-weight-bold">Added Properties</mat-card-title>
-    <div fxLayout="row"  fxLayoutGap="15px" class="scroll" >
-        <div *ngFor="let p of [1,2,3,4,5,6,7]">
-            <app-p-listing ></app-p-listing>
-        </div>
+    <div class="container">
+        <mat-grid-list cols="4" rowHeight="700px">
+            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <mat-card class="request-card">
+                    <mat-card-title>Buy Requests</mat-card-title>
+                    <!-- <div *ngFor="let i of reqs">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  For Property {{i.propertyPropertyId}}
+                                </mat-panel-title>
+            
+                                <mat-panel-description>
+                                    From {{i.userUserId}}
+                                  </mat-panel-description>
+                              </mat-expansion-panel-header>                     
+                          </mat-expansion-panel>
+                    </div> -->
+
+                    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">    
+                        
+                        <ng-container matColumnDef="id">
+                          <th mat-header-cell *matHeaderCellDef> ID </th>
+                          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="from">
+                          <th mat-header-cell *matHeaderCellDef> From </th>
+                          <td mat-cell *matCellDef="let element"> {{element.userUserId}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="forProperty">
+                          <th mat-header-cell *matHeaderCellDef> For Property </th>
+                          <td mat-cell *matCellDef="let element"> {{element.propertyPropertyId}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="amount">
+                          <th mat-header-cell *matHeaderCellDef> Amount </th>
+                          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef> Status </th>
+                            <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="accept">
+                            <th mat-header-cell *matHeaderCellDef>  </th>
+                            <td mat-cell *matCellDef="let element"> 
+                            <button *ngIf="element.status == 'Pending'" mat-button class="btn btn-default" (click)="acceptOffer(element)"> Accept Offer</button>    
+                            </td>
+                          </ng-container>
+
+                          <ng-container matColumnDef="reject">
+                            <th mat-header-cell *matHeaderCellDef>  </th>
+                            <td mat-cell *matCellDef="let element"> 
+                            <button *ngIf="element.status == 'Pending'" mat-button class="btn btn-default" (click)="rejectOffer(element)"> Reject Offer </button>    
+                            </td>
+                          </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                      </table>
+                      
+                      
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-card class="profile-container">
+                        <mat-card-header>
+                            <mat-card-title>User Profile</mat-card-title>        
+                        </mat-card-header>
+                        <img mat-card-image src="assets/img/team/team-1.jpg">
+                        <mat-card-content class="content-container">
+                            <ul>
+                                <li><h3>User Profile ID : {{user.userId}} </h3></li>
+                                <li><h3>Name : {{user.name}} </h3></li>
+                                <li><h3>Email : {{user.email}} </h3></li>
+                                <li><h3>Phone Number : {{user.pnum}} </h3></li>
+                                <li><h3>Joined : {{user.createdAt}} </h3></li>
+                            </ul>
+                        </mat-card-content>
+                
+                      </mat-card>
+                
+            </mat-grid-tile>
+          </mat-grid-list>
+    </div>
+
+    <div class="container">
+        <mat-grid-list cols="4" rowHeight="700px">
+            <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <mat-card class="wallet-history">
+                    <mat-card-title>Transaction History</mat-card-title>
+                    <!-- <div *ngFor="let i of reqs">
+                        <mat-expansion-panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                  For Property {{i.propertyPropertyId}}
+                                </mat-panel-title>
+            
+                                <mat-panel-description>
+                                    From {{i.userUserId}}
+                                  </mat-panel-description>
+                              </mat-expansion-panel-header>                     
+                          </mat-expansion-panel>
+                    </div> -->
+    
+                    <table mat-table [dataSource]="dataSource1" class="mat-elevation-z8">    
+                        
+                        <ng-container matColumnDef="type">
+                          <th mat-header-cell *matHeaderCellDef> Type </th>
+                          <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="balance">
+                          <th mat-header-cell *matHeaderCellDef> Balance </th>
+                          <td mat-cell *matCellDef="let element"> {{element.userUserId}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="txId">
+                          <th mat-header-cell *matHeaderCellDef> Transaction ID </th>
+                          <td mat-cell *matCellDef="let element"> {{element.propertyPropertyId}} </td>
+                        </ng-container>
+                      
+                        
+                        <ng-container matColumnDef="amount">
+                          <th mat-header-cell *matHeaderCellDef> Amount </th>
+                          <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                        </ng-container>
+                      
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns1"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                      </table>
+                      
+                      
+                </mat-card>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+                    <mat-card class="wallet-container">
+                        <mat-card-header>
+                            <mat-card-title>Wallet</mat-card-title>        
+                        </mat-card-header>
+                        
+                        <div class="balance-container">
+                            <div class="balance"> 
+                              <h1> {{ balance }} 
+                                <p> PKR </p>
+                              </h1>
+                              
+                            </div>
+                        </div>
+
+                        <div>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      Deposit
+                                    </mat-panel-title>
+
+                                  </mat-expansion-panel-header>
+                                  
+                                  <div>
+                                    <mat-form-field>
+                                        <mat-label>Deposit Amount</mat-label>
+                                        <input matInput type="number" [(ngModel)]="depositAmount" name="depositAmount">
+                                      </mat-form-field>
+                                        <button mat-button type="submit" class="btn btn-default" (click)="deposit()">
+                                          Confirm
+                                        </button>
+                                </div>
+
+                              </mat-expansion-panel>
+                        </div>
+
+                        <div>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      Transfer
+                                    </mat-panel-title>
+
+                                  </mat-expansion-panel-header>
+                                  
+                                  <div>
+                                    
+
+                                      <mat-form-field>
+                                        <mat-label>To</mat-label>
+                                        <input matInput type="text" [(ngModel)]="transferTo" name="transferTo">
+                                      </mat-form-field>
+
+                                      <mat-form-field>
+                                        <mat-label>Transfer Amount</mat-label>
+                                        <input matInput type="number" [(ngModel)]="transferAmount" name="transferAmount">
+                                      </mat-form-field>
+
+                                        <button mat-button type="submit" class="btn btn-default" (click)="transfer()">
+                                          Confirm
+                                        </button>
+                                </div>
+
+                              </mat-expansion-panel>
+                        </div>
+
+                        <div>
+                            <mat-expansion-panel>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                      Withdraw
+                                    </mat-panel-title>
+
+                                  </mat-expansion-panel-header>
+                                  
+                                  <div>
+                                    <mat-form-field>
+                                        <mat-label>Withdraw Amount</mat-label>
+                                        <input matInput type="number" [(ngModel)]="withdrawAmount" name="withdrawAmount">
+                                      </mat-form-field>
+                                        <button mat-button type="submit" class="btn btn-default" (click)="withdraw()">
+                                          Confirm
+                                        </button>
+                                </div>
+
+                              </mat-expansion-panel>
+                        </div>
+
+                      </mat-card>
+                
+            </mat-grid-tile>
+          </mat-grid-list>
+    </div>
+
+    <div class="container">
+      <mat-card-title class="text-uppercase font-weight-bold">Added Properties</mat-card-title>
+      <div fxLayout="row"  fxLayoutGap="15px" class="scroll" >
+          <div *ngFor="let p of userProperties">
+              <app-p-listing [PDetails]="p"></app-p-listing>
+          </div>
+      </div>
     </div>
 </div>
+
+
 
 <!-- <div layout="row">
 

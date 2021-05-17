@@ -35,8 +35,26 @@
       <span class="text-uppercase font-weight-bold" >PBChain</span>
       <p style="margin-top: 5pc; margin-left: -5.66pc;">Property Blockchain Application</p>
       <span class="example-spacer"></span>
-      <button mat-button routerLink="/login" routerLinkActive="active">Sign In</button>
+      <div *ngIf="userLoggedIn == true">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>
+            <img src="assets/img/icons/profile-icon.svg">
+          </mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="profile()">
+            <span>{{user.name}}'s Profile</span>
+          </button>
+
+          <button mat-menu-item (click)="logout()">
+            <span>Logout</span>
+          </button>
+        </mat-menu>
+      </div>
+      <div *ngIf="userLoggedIn == false">
+        <button mat-button routerLink="/login" routerLinkActive="active">Sign In</button>
       <button mat-button routerLink="/register" routerLinkActive="active">Register</button>
+      </div>
     </mat-toolbar>
     <!-- <mat-toolbar color="primary"> -->
       <button

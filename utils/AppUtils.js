@@ -11,8 +11,16 @@ const { model } = require('mongoose');
  
 
 module.exports.buildCCPOrg1 = () => {
+	// if(path) {
+
+	// }
+	// else {
+
+	// }
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', '..', 'fabric-samples', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+	console.log(__dirname)
+	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+	// const ccpPath = 'ccpOrg1.json'
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
 		throw new Error(`no such file or directory: ${ccpPath}`);
@@ -28,7 +36,7 @@ module.exports.buildCCPOrg1 = () => {
 
 module.exports.buildCCPOrg2 = () => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', '..', 'fabric-samples', 'test-network',
+	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
 		'organizations', 'peerOrganizations', 'org2.example.com', 'connection-org2.json');
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
@@ -45,7 +53,7 @@ module.exports.buildCCPOrg2 = () => {
 
 module.exports.buildCCPOrg3 = () => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', '..', 'fabric-samples', 'test-network',
+	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
 		'organizations', 'peerOrganizations', 'org3.example.com', 'connection-org3.json');
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
@@ -132,6 +140,61 @@ module.exports.enrollAdminPbchain = async (adminId, adminPass) => {
         await wallet.put(adminId, x509Identity);
         console.log('Successfully enrolled admin user "admin" and imported it into the wallet');
 
+		const userContract = await this.connectToNetwork('Org1', ccp, 'mychannel', 'UserContract', 'admin');
+		const adminUser = {
+			name : 'admin',
+			email : 'admin@org1.example.com',
+			password : 'adminpw'
+		}
+		await userContract.submitTransaction('createUserAccount', JSON.stringify(adminUser));
+
+    } catch (error) {
+        console.error(`Failed to enroll admin user "admin": ${error}`);
+        process.exit(1);
+    }
+}
+
+module.exports.enrollAdmin = async (ccp, org, adminId, adminPass) => {
+	try {
+        // load the network configuration
+		// const ccp = this.buildCCPOrg1();
+
+        // Create a new CA client for interacting with the CA.
+       const ca = this.getCA(`ca.${org.toLowerCase()}.example.com`, ccp);
+
+        // Create a new file system based wallet for managing identities.
+        const walletPath = this.getWalletPath(org)
+        const wallet = await this.buildWallet(walletPath);
+        console.log(`Wallet path: ${walletPath}`);
+
+        // Check to see if we've already enrolled the admin user.
+        const identity = await wallet.get(adminId);
+        if (identity) {
+            console.log('An identity for the admin user "admin" already exists in the wallet');
+            return;
+        }
+
+        // Enroll the admin user, and import the new identity into the wallet.
+        const enrollment = await ca.enroll({ enrollmentID: adminId, enrollmentSecret: adminPass });
+        const x509Identity = {
+            credentials: {
+                certificate: enrollment.certificate,
+                privateKey: enrollment.key.toBytes(),
+            },
+            mspId: `${org}MSP`,
+            type: 'X.509',
+        };
+        await wallet.put(adminId, x509Identity);
+        console.log('Successfully enrolled admin user "admin" and imported it into the wallet');
+
+		const userContract = await this.connectToNetwork(org, ccp, 'mychannel', 'UserContract', 'admin');
+		const adminUser = {
+			name : 'admin',
+			email : 'admin@org1.example.com',
+			password : 'adminpw'
+		}
+		await userContract.submitTransaction('createUserAccount', JSON.stringify(adminUser));
+
     } catch (error) {
         console.error(`Failed to enroll admin user "admin": ${error}`);
         process.exit(1);
@@ -181,12 +244,12 @@ module.exports.registerIdentity =  async (emailAddress, firstName, lastName, pas
     }
 };
 
-module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, userId, affiliation) => {
+module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, user, affiliation) => {
 	try {
 		// Check to see if we've already enrolled the user
-		const userIdentity = await wallet.get(userId);
+		const userIdentity = await wallet.get(user.email);
 		if (userIdentity) {
-			console.log(`An identity for the user ${userId} already exists in the wallet`);
+			console.log(`An identity for the user ${user.email} already exists in the wallet`);
 			return;
 		}
 
@@ -195,7 +258,7 @@ module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, userId
 		if (!adminIdentity) {
 			console.log('An identity for the admin user does not exist in the wallet');
 			console.log('Enroll the admin user before retrying');
-			return;
+			throw new Error('Enroll the admin user before retrying');
 		}
 
 		// build a user object for authenticating with the CA
@@ -206,11 +269,11 @@ module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, userId
 		// if affiliation is specified by client, the affiliation value must be configured in CA
 		const secret = await caClient.register({
 			affiliation: affiliation,
-			enrollmentID: userId,
+			enrollmentID: user.email,
 			role: 'client'
 		}, adminUser);
 		const enrollment = await caClient.enroll({
-			enrollmentID: userId,
+			enrollmentID: user.email,
 			enrollmentSecret: secret
 		});
 		const x509Identity = {
@@ -221,10 +284,16 @@ module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, userId
 			mspId: orgMspId,
 			type: 'X.509',
 		};
-		await wallet.put(userId, x509Identity);
-		console.log(`Successfully registered and enrolled user ${userId} and imported it into the wallet`);
+		await wallet.put(user.email, x509Identity);
+		console.log(`Successfully registered and enrolled user ${user.email} and imported it into the wallet`);
+
+		const ccp = await this.buildCCPOrg1();
+		const userContract = await this.connectToNetwork('Org1', ccp, 'mychannel', 'UserContract', user.email);
+		console.log(user);
+		await userContract.submitTransaction('createUserAccount', JSON.stringify(user));
 	} catch (error) {
 		console.error(`Failed to register user : ${error}`);
+		throw error;
 	}
 };
 
@@ -241,7 +310,7 @@ module.exports.connectToNetwork = async (org, ccp, channel, ccn, userId) => {
     });
 
     const network = await gateway.getNetwork(channel);
-    const contract = network.getContract('pbchain', ccn);
+    const contract = network.getContract('pbchain-4', ccn);
 
     return contract;
 }

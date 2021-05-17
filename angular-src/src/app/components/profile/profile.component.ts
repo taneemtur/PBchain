@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../interfaces/userInterface';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { PropertyService } from 'src/app/services/property.service';
+import { is } from 'sequelize/types/lib/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { WalletService } from 'src/app/services/wallet.service';
+
+// { name: "aa", email: "aa", pnum: 122, password: "gKsDbnMP4W6pdKN" }
 
 @Component({
   selector: 'app-profile',
@@ -10,13 +17,157 @@ import { Router } from '@angular/router';
 export class ProfileComponent implements OnInit {
 
   user = undefined
+  reqs : any[];
+  userProperties : any[];
 
-  constructor(private router : Router) { 
-    this.user = this.router.getCurrentNavigation().extras.state.user;
-    console.log(this.user)
+
+  displayedColumns: string[] = ['id', 'from', 'forProperty', 'amount', 'status', 'accept', 'reject'];
+  displayedColumns1: string[] = ['type', 'balance', 'txId', 'amount'];
+  dataSource = [];
+  dataSource1 = [];
+
+  balance : Number;
+  depositAmount : Number;
+  transferTo : string;
+  transferAmount : Number;
+  withdrawAmount : Number;
+
+  constructor(
+    private router : Router, 
+    private loginService : LoginService,
+    private propertyService : PropertyService,
+    private walletService : WalletService,
+    private _snackBar : MatSnackBar,
+    ) { 
   }
 
   ngOnInit(): void {
+    this.loginService.getData()
+      .subscribe(user => {
+        if (user) {
+          this.user = user;
+        }
+        else {
+          this.router.navigate(['/login']);
+        }
+      })
+
+    this.getBuyRequests();
+    this.getUserProperties();
+    this.getClientAccBalance();
+  }
+
+  acceptOffer(element) {
+    this.propertyService.transferProperty(element.propertyPropertyId, element.userUserId, element.amount)
+      .subscribe(res => {
+        if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+
+          this.getBuyRequests();
+          this.getUserProperties();
+        }        
+      })
+  }
+
+  getBuyRequests() {
+    this.propertyService.getUserBuyRequests(this.user.userId)
+      .subscribe(res => {
+        console.log(res)
+        if(res.success) {
+          this.reqs = res.reqs;
+          this.dataSource = this.reqs
+          console.log(this.reqs)
+        }
+      })
+  }
+
+  getUserProperties() {
+    this.propertyService.getUserProperties(this.user.userId)
+      .subscribe(res => {
+        console.log(res)
+        this.userProperties = res.properties
+      })
+  }
+
+  getClientAccBalance() {
+  let balance = 0;
+  this.walletService.getAccountBalance(this.user.email)
+  .then(bal => {
+    bal.subscribe(data => {
+      console.log(data);
+      this.balance = data;
+      this._snackBar.open("Successfully got account balance", "", {
+        duration: 2000,
+      });
+    });
+  })
+  .catch(err => {
+    console.log(err);
+    this._snackBar.open("Failed to get account balance.", "", {
+      duration: 2000,
+    });
+
+  })
+    
+  }
+
+  deposit () {
+    this.walletService.depositAmount(this.user.email, this.depositAmount)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+
+          this.walletService.balanceUpdate(res.balance)
+        }
+        else {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+        }
+      })
+  }
+
+  transfer() {
+    this.walletService.transferAmount(this.user.email, this.transferTo, this.transferAmount)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+
+          this.walletService.balanceUpdate(res.balance)
+        }
+        else {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+        }
+      })
+  }
+
+  withdraw () {
+    this.walletService.withdrawAmount(this.user.email, this.withdrawAmount)
+    .subscribe(res => {
+      console.log(res);
+      if(res.success) {
+        this._snackBar.open(res.msg, "", {
+          duration: 2000,
+        });
+
+        this.walletService.balanceUpdate(res.balance)
+      }
+      else {
+        this._snackBar.open(res.msg, "", {
+          duration: 2000,
+        });
+      }
+    })    
   }
 
 }

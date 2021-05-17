@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-nav',
@@ -19,6 +20,8 @@ export class NavComponent {
   ]
 
   current : String = "Home";
+  userLoggedIn : boolean = false; 
+  user : undefined;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -29,12 +32,23 @@ export class NavComponent {
   constructor(
     private breakpointObserver: BreakpointObserver, 
     private cdref: ChangeDetectorRef, 
-    private router : Router) {
+    private router : Router,
+    private loginService : LoginService
+    ) {
       this.set_current()
     }
 
   ngOnInit () {
-    
+    this.loginService.getData()
+      .subscribe(user => {
+        if(user) {
+          this.user = user;
+          this.userLoggedIn = true
+        }
+        else {
+          this.userLoggedIn = false
+        }
+      })
   }
 
   
@@ -50,6 +64,15 @@ export class NavComponent {
       })
     });
     
+  }
+
+  logout () {
+    this.loginService.nextUser(undefined);
+    this.router.navigate(['/login']);
+  }
+
+  profile() {
+    this.router.navigate(['/profile'])
   }
 
 }

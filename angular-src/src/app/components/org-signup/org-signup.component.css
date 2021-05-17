@@ -1,0 +1,18 @@
+.register {
+    text-align:  center;
+  }
+
+  .signup {
+    width: 30%;
+    margin : 5% auto;
+  }
+
+  mat-tab-body {
+    text-align: center;
+  }
+  
+  mat-card {
+    width: 70%;
+    margin: 10% auto;
+    border-radius: 8px;
+  }

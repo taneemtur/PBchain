@@ -71,6 +71,15 @@ module.exports.addProperty = async (propertyData) => {
     }
 }
 
+module.exports.getPropertyByOwner = async (owner) => {
+    try {
+        let prperty = await PropertyModel.findAll()
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
 module.exports.getAllProperties = (callback) => {
     PropertyModel.findAll()
     .then(property => {
@@ -160,7 +169,7 @@ module.exports.getPropertyBySearchQuery = (searchQuery, callback) => {
 
 module.exports.updatePropertyOwner = async (propertyId, newOwner) => {
     try {
-        let property = await this.getPropertyById(propertyId);
+        let property = await PropertyModel.findOne({ where : {propertyId : propertyId}})
         property.userUserId = newOwner;
         property.save();
         

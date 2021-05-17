@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -26,6 +27,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTabsModule } from '@angular/material/tabs'
 
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PDetailsComponent } from './components/p-details/p-details.component';
@@ -50,6 +52,11 @@ import { RecentPropertyComponent } from './components/recent-property/recent-pro
 import { BlogsComponent } from './components/blogs/blogs.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { CalculatorComponent } from './components/calculator/calculator.component';
+import { PropertyHistoryComponent } from './components/property-history/property-history.component';
+import { OrgSignupComponent } from './components/org-signup/org-signup.component';
+import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
+import { DashboardComponent } from './components/admin-panel/dashboard/dashboard.component';
+import { AdminLoginComponent } from './components/admin-panel/admin-login/admin-login.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +84,11 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
     BlogsComponent,
     ContactComponent,
     CalculatorComponent,
-   
+    PropertyHistoryComponent,
+    OrgSignupComponent,
+    AdminPanelComponent,
+    DashboardComponent,
+    AdminLoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,7 +114,9 @@ import { CalculatorComponent } from './components/calculator/calculator.componen
     MatSelectModule,
     MatExpansionModule,
     MatGridListModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTableModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

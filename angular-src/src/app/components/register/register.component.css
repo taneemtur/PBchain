@@ -10,14 +10,27 @@
     background-size: cover;
     overflow: hidden;
   }
+
+  .register {
+    text-align:  center;
+  }
+
+  .signup {
+    width: 30%;
+    margin : 5% auto;
+  }
+
+  mat-tab-body {
+    text-align: center;
+  }
   
   mat-card {
-    width: 30%;
+    width: 70%;
     margin: 10% auto;
     border-radius: 8px;
   }
   mat-form-field, mat-checkbox {
-    width: 80%;
+    width: auto;
     display: block;
     margin: auto;
   }

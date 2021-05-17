@@ -32,49 +32,41 @@ module.exports = UserModel = conn.define('user', {
 UserModel.hasMany(PropertyModel);
 PropertyModel.belongsTo(UserModel);
 
-module.exports.addUser = async (userData, callback) => {
+module.exports.addUser = async (userData) => {
     try {
         const user = await UserModel.findOne({ where: { email: userData.email } });
-    if(user == null) {
+        if(user == null) {
 
-        bcrypt.genSalt(10, (err, salt) => {
-            if(err) {
-                throw err;
-            }
+            const salt = await bcrypt.genSalt(10);
+            const hash = bcrypt.hashSync(userData.password, salt);
+            userData.userId = (userData.email.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*90000);
+            userData.password = hash;
+            const user = await UserModel.create(userData);
 
-            bcrypt.hash(userData.password, salt, (err, hash) => {
-                if(err) {
-                    throw err;
-                }
-
-                userData.userId = (userData.email.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*90000);
-                userData.password = hash;
-
-                UserModel.create(userData)
-                .then(newUser => {
-                    callback(undefined, newUser);
-                })
-                .catch(err => {
-                    callback(err, undefined);
-                })
-            });
-        });
-
-       
-    }
-    else {
-        console.log("User already exists.");
-        callback("User already exists.", undefined);
-    }
+            return user;        
+        }
+        else {
+            throw new Error("User already exists.")
+        }
     }
     catch(err) { 
-     callback(err, undefined)  
+        throw err;  
     }
 }
 
 module.exports.getUserByEmail = async (email, callback) => {
     const user = await UserModel.findOne({ where: { email: email } });
     callback(user);
+}
+
+module.exports.getUserById = async (userId) => {
+    try {
+        let user = await UserModel.findOne({where :{ userId : userId}})
+        return user
+    }
+    catch (err) {
+        throw err
+    }
 }
 
 module.exports.deleteUser = async (email, callback) => {

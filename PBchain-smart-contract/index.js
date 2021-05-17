@@ -4,8 +4,11 @@
 
 'use strict';
 
-const Contract = require('./lib/property-asset-contract');
+const PropertyAssetContract = require('./lib/property-asset-contract');
+const UserContract = require('./lib/user-contract');
+const WalletTokenContract = require('./lib/token-contract');
 
-module.exports.UserContract = Contract.UserContract;
-module.exports.PropertyAssetContract = Contract.PropertyAssetContract;
-module.exports.contracts = [ Contract.UserContract, Contract.PropertyAssetContract ];
+module.exports.UserContract = UserContract;
+module.exports.PropertyAssetContract = PropertyAssetContract;
+module.exports.WalletTokenContract = WalletTokenContract;
+module.exports.contracts = [ UserContract, PropertyAssetContract, WalletTokenContract];

@@ -41,9 +41,9 @@
     
 } 
 
-.hor mat-card-title {
+/* mat-card-title {
     text-align: center;
-}
+} */
 
 .scroll {
     padding : 10px;
@@ -63,3 +63,51 @@
 .example-card img {
 margin-left: auto;
 }
+
+mat-card img {
+  /* margin-left: ; */
+  height : 200px;
+  width : 200px;
+  }
+
+table {
+  width: 100%;
+}
+
+.request-card {
+  width : 95%;
+  height: 90%;
+}
+
+.wallet-history {
+  width : 95%;
+  height: 90%;
+}
+
+.profile-container  {
+  width : 95%;
+  height : 90%;
+  text-align: center;
+}
+
+.wallet-container  {
+  width : 100%;
+  height : auto;
+  text-align: center;
+}
+
+.balance-container {
+  margin : 10px;
+  text-align: center;
+  
+}
+
+.balance {
+  font-size: xx-large;
+  /* font-size-adjust: 1.5; */
+}
+
+.curr {
+  font-size-adjust: 0.5;
+}
+

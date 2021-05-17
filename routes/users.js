@@ -16,38 +16,51 @@ router.post('/register-user', async (req, res, next) => {
     }
 
     try {
-        const ccp = AppUtils.buildCCPOrg1();
-        const walletPath = AppUtils.getWalletPath("Org1");
+
+        const user = await User.addUser(data);
+
+        const ccp = AppUtils.buildCCPOrg3();
+        const walletPath = AppUtils.getWalletPath("Org3");
         const wallet = await AppUtils.buildWallet(walletPath);
-        const ca = AppUtils.getCA('ca.org1.example.com', ccp);
-        AppUtils.registerAndEnrollUser(ca, wallet, 'Org1MSP', data.email, '')
-        .then(() => {
-            User.addUser(data, (err, newUser) => {
-                if(err) {
-                    res.json({success : false, err : err});
-                }
+        const ca = AppUtils.getCA('ca.org3.example.com', ccp);
+        await AppUtils.registerAndEnrollUser(ca, wallet, 'Org3MSP', user, '')
+        res.json({
+            success : true,
+            msg : "User Successfully registered.",
+            user : {
+                userId : user.userId,
+                name : user.name,
+                email : user.email,
+                Pnum : user.Pnum
+            }
+        });
+        // .then(() => {
+        //     User.addUser(data, (err, newUser) => {
+        //         if(err) {
+        //             res.json({success : false, err : err});
+        //         }
     
-                if(newUser) {
-                    res.json({
-                        success : true,
-                        msg : "User Successfully registered.",
-                        user : {
-                            userId : newUser.userId,
-                            name : newUser.name,
-                            email : newUser.email,
-                            Pnum : newUser.Pnum
-                        }
-                    });
-                }
-                else {
-                    res.json({success : false, err : "Failed to register user."});
-                }
-            })
-        })
-        .catch (err => {
-            console.error(err);
-            res.json({success : false, err : "Failed to register user."});
-        })
+        //         if(newUser) {
+        //             res.json({
+        //                 success : true,
+        //                 msg : "User Successfully registered.",
+        //                 user : {
+        //                     userId : newUser.userId,
+        //                     name : newUser.name,
+        //                     email : newUser.email,
+        //                     Pnum : newUser.Pnum
+        //                 }
+        //             });
+        //         }
+        //         else {
+        //             res.json({success : false, err : "Failed to register user."});
+        //         }
+        //     })
+        // })
+        // .catch (err => {
+        //     console.error(err);
+        //     res.json({success : false, err : "Failed to register user."});
+        // })
         
     }
     catch (err) {

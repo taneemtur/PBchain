@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PropertyService } from '../../services/property.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-add-property',
@@ -24,13 +25,20 @@ export class AddPropertyComponent implements OnInit {
   bedroom : number;
   address : string;
 
+  user : any
+
   constructor(
     private propertyService : PropertyService,
     private _snackBar : MatSnackBar,
-    private router : Router
+    private router : Router, 
+    private loginService : LoginService
     ) { }
 
   ngOnInit(): void {
+    this.loginService.getData()
+      .subscribe(user => {
+        this.user = user
+      })
   }
 
   onSubmit() {
@@ -46,6 +54,7 @@ export class AddPropertyComponent implements OnInit {
     propertyDescription : this.description,
     propertyAddress : this.address,
     propertyTotalRooms : this.bedroom + this.extraRooms,
+    userId : this.user.userId
     }
 
     this.propertyService.addProperty(propertyData)
