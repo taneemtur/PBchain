@@ -41,4 +41,14 @@ router.post('/add-developer', (req, res, next) => {
     })
 })
 
+router.get('/get-developers', async (req, res, next) => {
+    try {
+        let developers = await Developer.getDevelopers();
+        res.json({success : true, developers : developers})
+    }
+    catch (err) {
+        res.json({success : false, msg : "Failed to get developers"})
+    }
+})
+
 module.exports = router;

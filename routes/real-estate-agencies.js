@@ -45,4 +45,15 @@ router.post('/add-agency', (req, res, next) => {
     
 });
 
+
+router.get('/get-agencies', async (req, res, next) => {
+    try {
+        let agencies = await Agency.getAllAgencies();
+        res.json({success : true, agencies : agencies})
+    }
+    catch (err) {
+        res.json({success : false, msg : "Failed to get agencies"})
+    }
+})
+
 module.exports = router;

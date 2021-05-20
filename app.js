@@ -32,15 +32,17 @@ AppUtils.enrollAdminPbchain('admin', 'adminpw')
      console.error(err);
  })
 
- let ccp = AppUtils.buildCCPOrg3();
- AppUtils.enrollAdmin(ccp, 'Org3', 'admin', 'adminpw')
+ let ccp = AppUtils.buildCCPOrg2();
+ AppUtils.enrollAdmin(ccp, 'Org2', 'admin', 'adminpw')
  .then(() => {
      console.log("Successful");
  })
  .catch(err => {
      console.error(err);
  })
-// conn.sync({force : true})
+
+
+conn.sync({force : true})
 conn.sync()
 
 
@@ -62,6 +64,9 @@ app.use('/buy', buyRequests);
 
 const wallet = require('./routes/wallet');
 app.use('/wallet', wallet);
+
+const orgSignUp  = require('./routes/org-signup-reqs');
+app.use('/org-signup', orgSignUp);
 
 app.get('/', (req, res, next) => {
     res.send("Invalid Endpoint")

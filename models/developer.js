@@ -21,13 +21,22 @@ module.exports = DeveloperModel = conn.define('developer', {
 DeveloperModel.hasMany(Project);
 DeveloperModel.hasOne(AgentModel);
 
-module.exports.addDeveloper = (developerData, callback) => {
-    developerData.developerId = (developerData.developerName.substring(0, 3)).toUpperCase() + (developerData.developerCity.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*(999-100+1)+100);
-    DeveloperModel.create(developerData)
-    .then(newDeveloper => {
-        callback(undefined, newDeveloper);
-    })
-    .catch(err => {
-        callback(err, undefined);
-    })
+module.exports.addDeveloper = async (developerData) => {
+    try {
+        developerData.developerId = (developerData.developerName.substring(0, 3)).toUpperCase() + (developerData.developerCity.substring(0, 3)).toUpperCase() + "-" + Math.floor(Math.random()*(999-100+1)+100);
+        return await DeveloperModel.create(developerData);
+    }
+    catch (err) {
+        throw err;
+    }
+}
+
+module.exports.getDevelopers = async () => {
+    try {
+        let developers = await DeveloperModel.findAll();
+        return developers;
+    }
+    catch (err) {
+        throw err
+    }
 }

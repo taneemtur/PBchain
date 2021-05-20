@@ -57,6 +57,7 @@ import { OrgSignupComponent } from './components/org-signup/org-signup.component
 import { AdminPanelComponent } from './components/admin-panel/admin-panel.component';
 import { DashboardComponent } from './components/admin-panel/dashboard/dashboard.component';
 import { AdminLoginComponent } from './components/admin-panel/admin-login/admin-login.component';
+import { WalletComponent } from './components/wallet/wallet.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +90,7 @@ import { AdminLoginComponent } from './components/admin-panel/admin-login/admin-
     AdminPanelComponent,
     DashboardComponent,
     AdminLoginComponent,
+    WalletComponent,
   ],
   imports: [
     BrowserModule,

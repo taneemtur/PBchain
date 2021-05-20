@@ -63,8 +63,8 @@
                     <mat-form-field>
                       <mat-label>Real Estate Agencies</mat-label>
                       <mat-select [(ngModel)]="userType" name="userType">
-                        <mat-option *ngFor="let type of userTypes" [value]="type">
-                          {{type}}
+                        <mat-option *ngFor="let type of agencies" [value]="type">
+                          {{type.agencyName}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
@@ -106,8 +106,8 @@
                 <mat-form-field>
                   <mat-label>Developer Organizations</mat-label>
                   <mat-select [(ngModel)]="userType" name="userType">
-                    <mat-option *ngFor="let type of userTypes" [value]="type">
-                      {{type}}
+                    <mat-option *ngFor="let type of developers" [value]="type">
+                      {{type.developerName}}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>

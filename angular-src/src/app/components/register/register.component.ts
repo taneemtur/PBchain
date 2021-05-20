@@ -26,6 +26,8 @@ export class RegisterComponent implements OnInit {
   }
 
   userTypes = ["Indivisual", "Agent", "Developer"]
+  agencies : any[];
+  developers : any[];
 
   constructor(
     private _snackBar : MatSnackBar, 
@@ -34,6 +36,25 @@ export class RegisterComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.getOrgs()
+  }
+
+  getOrgs() {
+    this.registerService.getAgencies()
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this.agencies = res.agencies;
+        }
+      })
+
+    this.registerService.getDevelopers()
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this.developers = res.developers;
+        }
+      })
   }
 
   onSubmit () {

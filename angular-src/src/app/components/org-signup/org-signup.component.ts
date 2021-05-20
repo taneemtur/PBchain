@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RegisterService } from 'src/app/services/register.service';
 
 @Component({
   selector: 'app-org-signup',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrgSignupComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private registerService : RegisterService
+  ) { }
 
   orgName : string;
   orgEmail : string;
@@ -20,11 +23,45 @@ export class OrgSignupComponent implements OnInit {
   }
 
   onSubmitAgency() {
+    let data = {
+      orgName : this.orgName,
+      orgEmail : this.orgEmail,
+      orgNum : this.orgNum,
+      orgAddress : this.orgAddress,
+      orgCity : this.orgCity,
+    }
 
+    this.registerService.registerAgency(data)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+
+        }
+        else {
+
+        }
+      })
   }
 
   onSubmitDeveloper() {
+    let data = {
+      orgName : this.orgName,
+      orgEmail : this.orgEmail,
+      orgNum : this.orgNum,
+      orgAddress : this.orgAddress,
+      orgCity : this.orgCity,
+    }
 
+    this.registerService.registerDeveloper(data)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+
+        }
+        else {
+
+        }
+    })
   }
 
 }

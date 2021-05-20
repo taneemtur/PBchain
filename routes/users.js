@@ -19,11 +19,11 @@ router.post('/register-user', async (req, res, next) => {
 
         const user = await User.addUser(data);
 
-        const ccp = AppUtils.buildCCPOrg3();
-        const walletPath = AppUtils.getWalletPath("Org3");
+        const ccp = AppUtils.buildCCPOrg1();
+        const walletPath = AppUtils.getWalletPath("Org1");
         const wallet = await AppUtils.buildWallet(walletPath);
-        const ca = AppUtils.getCA('ca.org3.example.com', ccp);
-        await AppUtils.registerAndEnrollUser(ca, wallet, 'Org3MSP', user, '')
+        const ca = AppUtils.getCA('ca.org1.example.com', ccp);
+        await AppUtils.registerAndEnrollUser(ca, wallet, 'Org1MSP', user, '')
         res.json({
             success : true,
             msg : "User Successfully registered.",
