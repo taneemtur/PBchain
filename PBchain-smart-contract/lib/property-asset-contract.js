@@ -3,10 +3,10 @@
 
 const UserContract = require('./user-contract');
 const PropertyAsset = require('./Property');
+const WalletTokenContract = require('./token-contract');
+const rentPrefix = 'rent';
 
-// const userPrefix = 'User';
-
-class PropertyAssetContract extends UserContract {
+class PropertyAssetContract extends WalletTokenContract{
 
     async propertyAssetExists(ctx, propertyAssetId) {
         const buffer = await ctx.stub.getState(propertyAssetId);
@@ -70,6 +70,79 @@ class PropertyAssetContract extends UserContract {
         ctx.stub.setEvent('Transfer', Buffer.from(JSON.stringify(transferEvent)));
 
         return true;
+    }
+
+    async putPropertyonRent (ctx, propertyAssetId, tenant, rentPerMonth) {
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+
+        if(!exists) {
+            throw new Error(`The property asset ${propertyAssetId} does not exist`);
+        }
+
+        // const propertyAssetBytes = await ctx.stub.getState(propertyAssetId);
+        // // console.log(propertyAssetBytes);
+        // const propertyAsset = JSON.parse(propertyAssetBytes.toString())
+
+        // if (!(propertyAsset.propertyDetails.purpose == "Rent")) {
+        //     throw new Error(`The property asset ${propertyAssetId} not for rent`);
+        // }
+
+
+        let rentDate = new Date(Date.now())
+        let rentDueDate = new Date(rentDate)
+        rentDueDate.setMonth(rentDueDate.getMonth() + 1)
+
+        const rent = {
+            tenant : tenant,
+            rentPerMonth : rentPerMonth,
+            securityDeposit : rentPerMonth*3,
+            rentedOn : rentDate.toDateString(),
+            rentDueDate : rentDueDate.toDateString()
+        }
+
+        const rentKey = ctx.stub.createCompositeKey(rentPrefix, [propertyAssetId]);
+
+        const rentObj = Buffer.from(JSON.stringify(rent));
+        await ctx.stub.putState(rentKey, rentObj);
+    }
+
+    async getPropertyRent (ctx, propertyAssetId) {
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+
+        if (!exists) {
+            throw new Error(`The property asset ${propertyAssetId} does not exist`);
+        }
+
+        const rentKey = ctx.stub.createCompositeKey(rentPrefix, [propertyAssetId]);
+        const buffer = await ctx.stub.getState(rentKey);
+
+        if (!(!!buffer && buffer.length > 0)) {
+            throw new Error(`The property asset ${propertyAssetId} not on rent`);
+        }
+
+        const rent = JSON.parse(buffer.toString());
+        return rent;
+    }
+
+    async updateRent (ctx, propertyAssetId, newRent) {
+        const exists = await this.propertyAssetExists(ctx, propertyAssetId);
+
+        if (!exists) {
+            throw new Error(`The property asset ${propertyAssetId} does not exist`);
+        }
+
+        const rentKey = ctx.stub.createCompositeKey(rentPrefix, [propertyAssetId]);
+        const buffer = await ctx.stub.getState(rentKey);
+
+        if (!(!!buffer && buffer.length > 0)) {
+            throw new Error(`The property asset ${propertyAssetId} not on rent`);
+        }
+
+        newRent = JSON.parse(newRent);
+        console.log(newRent);
+
+        const rentObj = Buffer.from(JSON.stringify(newRent));
+        await ctx.stub.putState(rentKey, rentObj);
     }
 
     async deletePropertyAsset(ctx, propertyAssetId) {

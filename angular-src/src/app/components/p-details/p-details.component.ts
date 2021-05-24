@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { PropertyService } from 'src/app/services/property.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+
 @Component({
   selector: 'app-p-details',
   templateUrl: './p-details.component.html',
@@ -31,6 +34,7 @@ export class PDetailsComponent implements OnInit {
 
   offeredAmount : Number;
   constructor(
+    public dialog: MatDialog,
     private router : Router,
     private propertyService : PropertyService,
     private loginService : LoginService
@@ -43,6 +47,19 @@ export class PDetailsComponent implements OnInit {
       .subscribe(user => {
         this.user = user;
       })
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmDailog, {
+      width: '400px',
+      data : this.offeredAmount
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.offeredAmount = result;
+      this.placeBuyRequest();
+    });
   }
 
   placeBuyRequest () {
@@ -63,6 +80,41 @@ export class PDetailsComponent implements OnInit {
      })
   }
 
+  placeRentRequest () {
+    let req = {
+      amount : this.offeredAmount,
+      propertyId : this.propertyDetails.propertyId,
+      userId : this.user.userId
+    }
 
+    this.propertyService.placeRentRequest(req)
+     .subscribe(res => {
+       if(res.success) {
+         console.log(res, "rent")
+       }
+       else {
+         console.log(res)
+       }
+     })
+  }
+
+
+
+}
+
+
+@Component({
+  selector: 'confirm-dailog',
+  templateUrl: './confirm-dailog.html',
+})
+export class ConfirmDailog {
+
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDailog>,
+    @Inject(MAT_DIALOG_DATA) public data: Number) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
 
 }

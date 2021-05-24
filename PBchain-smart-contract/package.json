@@ -1,6 +1,6 @@
 {
   "name": "PBchain-smart-contract",
-  "version": "0.0.19",
+  "version": "0.0.29",
   "description": "My Smart Contract",
   "main": "index.js",
   "engines": {

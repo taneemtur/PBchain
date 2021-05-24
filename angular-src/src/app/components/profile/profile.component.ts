@@ -22,9 +22,13 @@ export class ProfileComponent implements OnInit {
 
 
   displayedColumns: string[] = ['id', 'from', 'forProperty', 'amount', 'status', 'accept', 'reject'];
-  displayedColumns1: string[] = ['type', 'balance', 'txId', 'amount'];
+  displayedColumns1: string[] = ['id', 'from', 'forProperty', 'amount', 'status', 'accept', 'reject'];
+  displayedColumns2: string[] = ['id', 'propertyId', 'owner', 'rentPerMonth', 'securityDeposit', 'rentedOn', 'rentDueDate'];
+  displayedColumns3: string[] = ['id', 'propertyId', 'tenant', 'rentPerMonth', 'securityDeposit', 'rentedOn', 'rentDueDate'];
   dataSource = [];
   dataSource1 = [];
+  dataSource2 = [];
+  dataSource3 = [];
 
   balance : Number;
   depositAmount : Number;
@@ -55,6 +59,9 @@ export class ProfileComponent implements OnInit {
     this.getBuyRequests();
     this.getUserProperties();
     this.getClientAccBalance();
+    this.getRentRequests();
+    this.getRentedProperties();
+    this.getPropertiesOnRent();
   }
 
   acceptOffer(element) {
@@ -71,6 +78,26 @@ export class ProfileComponent implements OnInit {
       })
   }
 
+  acceptRentOffer (el) {
+    let data = {
+      id : el.id,
+      propertyId : el.propertyId,
+      tenant : el.userId,
+      owner : this.user.userId,
+      amount : el.amount
+    }
+
+    this.propertyService.acceptRentOffer(data)
+      .subscribe(res => {
+        console.log(res)
+        if(res.success) {
+          this.getRentRequests();
+          this.getClientAccBalance();
+          this.getPropertiesOnRent();
+        }
+      })
+  }
+
   getBuyRequests() {
     this.propertyService.getUserBuyRequests(this.user.userId)
       .subscribe(res => {
@@ -83,11 +110,41 @@ export class ProfileComponent implements OnInit {
       })
   }
 
+  getRentRequests () {
+    this.propertyService.getRentReqs(this.user.userId)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this.dataSource1 = res.reqs;
+        }
+      })
+  }
+
   getUserProperties() {
     this.propertyService.getUserProperties(this.user.userId)
       .subscribe(res => {
         console.log(res)
         this.userProperties = res.properties
+      })
+  }
+
+  getRentedProperties () {
+    this.propertyService.getRentedProperties(this.user.userId)
+      .subscribe(res => {
+        console.log(res)
+        if(res.success) {
+          this.dataSource2 = res.properties;
+        }
+      })
+  }
+
+  getPropertiesOnRent () {
+    this.propertyService.getPropertiesOnRent(this.user.userId)
+      .subscribe(res => {
+        console.log(res)
+        if(res.success) {
+          this.dataSource3 = res.properties;
+        }
       })
   }
 

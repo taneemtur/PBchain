@@ -45,10 +45,17 @@
  }
 
  .form {
-   padding : 10px;
    text-align: center;
  }
 
- .form mat-form-field {
+ mat-form-field {
    margin : 10px;
+ }
+
+ .form textarea {
+  width : 100%;
+ }
+
+ text {
+   width : 70%;
  }

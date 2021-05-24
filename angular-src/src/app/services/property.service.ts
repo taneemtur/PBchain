@@ -60,4 +60,31 @@ export class PropertyService {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.get<any>('http://localhost:3000/property/properties/'+userId, {headers : headers})
   }
+
+  placeRentRequest (req) {
+    console.log(req)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>('http://localhost:3000/rent/place-rent-request', req, {headers : headers})
+  }
+
+  getRentReqs (userId) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>('http://localhost:3000/rent/get-rent-requests/'+userId, {headers : headers});
+  }
+
+  acceptRentOffer (data) {
+    console.log(data)
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.post<any>('http://localhost:3000/property/rent-property/'+data.propertyId, data, {headers : headers})
+  }
+ 
+  getRentedProperties (tenant) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>('http://localhost:3000/property/get-rented-properties/'+tenant, {headers : headers});
+  }
+
+  getPropertiesOnRent (owner) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>('http://localhost:3000/property/on-rent/'+owner, {headers : headers});
+  }
 }

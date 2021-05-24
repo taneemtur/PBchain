@@ -18,7 +18,7 @@ const app = express();
 // });
 
 app.use(cors());
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit : '50mb'}))
 
 // (async () => {
 //     await AppUtils.enrollAdminPbchain('org1admin', 'org1');
@@ -42,7 +42,7 @@ AppUtils.enrollAdminPbchain('admin', 'adminpw')
  })
 
 
-conn.sync({force : true})
+// conn.sync({force : true})
 conn.sync()
 
 
@@ -61,6 +61,9 @@ app.use('/developer', developers)
 
 const buyRequests = require('./routes/buy-requests');
 app.use('/buy', buyRequests);
+
+const rentRequests = require('./routes/rent-requests');
+app.use('/rent', rentRequests);
 
 const wallet = require('./routes/wallet');
 app.use('/wallet', wallet);

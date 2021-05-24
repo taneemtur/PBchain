@@ -66,10 +66,7 @@
         <input matInput type="text" [(ngModel)]="location" name="location">
       </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>Property Area (Sq. Feet)</mat-label>
-          <input matInput type="number"  [(ngModel)]="area" name="area">
-        </mat-form-field>
+      <br>
 
       <mat-form-field>
         <mat-label>Bedrooms</mat-label>
@@ -86,23 +83,52 @@
       <input matInput type="number" [(ngModel)]="washroom" name="washroom">
     </mat-form-field>
 
-    <mat-form-field>
+    <br>
+  <mat-form-field>
     <mat-label>Price</mat-label>
     <input matInput type="number"  [(ngModel)]="price" name="price">
   </mat-form-field>
 
   <mat-form-field>
+    <mat-label>Property Area (Sq. Feet)</mat-label>
+    <input matInput type="number"  [(ngModel)]="area" name="area">
+  </mat-form-field>
+
+  <mat-form-field style="width: 70%;">
     <mat-label>Address</mat-label>
-    <input matInput type="text"  [(ngModel)]="address" name="address">
+    <textarea matInput class="text" [(ngModel)]="address" name="address"> </textarea>
   </mat-form-field>
 
-
-  <mat-form-field>
+  <mat-form-field style="width: 70%;">
     <mat-label>Description</mat-label>
-    <textarea matInput type="textbox"  [(ngModel)]="description" name="description"> </textarea>
+    <textarea matInput [(ngModel)]="description" name="description"> </textarea>
   </mat-form-field>
+
+  
+  <!-- <div>
+    <mat-form-field>
+      <input matInput readonly [(ngModel)]="fileAttr" name="fileAttr">
+    </mat-form-field>
+    <div mat-button>
+      <input style="display: none" type="file" (change)="onUpload($event)" #fileInput multiple="multiple" accept="image/*">
+      <mat-icon>upload</mat-icon>
+      Upload Images
+    </div>
+  </div> -->
+
+  <div>
+    <mat-form-field>
+      <input matInput readonly [(ngModel)]="fileAttr" name="fileAttr">
+      <input style="display: none" type="file" (change)="onUpload($event)" #fileInput multiple="multiple" accept="image/*">
+    </mat-form-field>
+    <button mat-button type="button"(click)="fileInput.click()" >
+      <mat-icon>upload</mat-icon>
+      Upload Images
+    </button>
+  </div>
+  
   <!-- <button mat-button color="primary" class="submit-button" type="submit">Add Property</button> -->
-  <div class="text-center">
+  <div style="margin: 15px;">
     <button mat-button type="submit" class="btn btn-default"> Submit</button>
     
 </div>

@@ -5,10 +5,11 @@ const AppUtils = require('../utils/AppUtils');
 router.post('/deposit', async (req, res, next) => {
     const userEmail = req.body.email;
     const amount = req.body.amount;
+    const org = 'Org1';
 
     try {
-        const ccp = AppUtils.buildCCPOrg1();
-        let walletTokenContract = await AppUtils.connectToNetwork('Org1', ccp, 'mychannel', 'WalletTokenContract', 'admin');
+        const ccp = AppUtils.buildCCP(org)
+        let walletTokenContract = await AppUtils.connectToNetwork(org, ccp, 'mychannel', 'WalletTokenContract', 'admin');
         const mint = await walletTokenContract.submitTransaction('Mint', amount);
         if (mint) {
             const transfer = await walletTokenContract.submitTransaction('Transfer', userEmail, amount);
@@ -65,7 +66,7 @@ router.post('/transfer', async (req, res, next) => {
 
 router.get('/account-balance/:email', async (req, res, next) => {
     const userEmail = req.params.email;
-    console.log(userEmail)
+    console.log(userEmail, "walletTokenContract")
     try {
         const ccp = AppUtils.buildCCPOrg1();
         const walletTokenContract = await AppUtils.connectToNetwork('Org1', ccp, 'mychannel', 'WalletTokenContract', userEmail);

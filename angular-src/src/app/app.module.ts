@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
@@ -58,6 +59,7 @@ import { AdminPanelComponent } from './components/admin-panel/admin-panel.compon
 import { DashboardComponent } from './components/admin-panel/dashboard/dashboard.component';
 import { AdminLoginComponent } from './components/admin-panel/admin-login/admin-login.component';
 import { WalletComponent } from './components/wallet/wallet.component';
+import { ConfirmDailog } from './components/p-details/p-details.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +93,7 @@ import { WalletComponent } from './components/wallet/wallet.component';
     DashboardComponent,
     AdminLoginComponent,
     WalletComponent,
+    ConfirmDailog
   ],
   imports: [
     BrowserModule,
@@ -118,7 +121,8 @@ import { WalletComponent } from './components/wallet/wallet.component';
     MatGridListModule,
     MatCheckboxModule,
     MatTableModule,
-    MatTabsModule
+    MatTabsModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,7 +8,37 @@ const { Gateway, Wallet, Wallets, IdentityService } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const bcrypt = require('bcryptjs');
 const { model } = require('mongoose');
+
+module.exports.timeConverter = (timestamp) => {
+	var a = new Date(timestamp*1000);
+	var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	var year = a.getFullYear();
+	var month = months[a.getMonth()];
+	var date = a.getDate();
+	var hour = a.getHours();
+	var min = a.getMinutes();
+	var sec = a.getSeconds();
+	var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+	return time;
+}
  
+
+module.exports.buildCCP = (org) => {
+	org = org.toLowerCase();
+	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
+		'organizations', 'peerOrganizations', `${org}.example.com`, `connection-${org}.json`);
+	console.log(ccpPath)
+	const fileExists = fs.existsSync(ccpPath);
+	if (!fileExists) {
+		throw new Error(`no such file or directory: ${ccpPath}`);
+	}
+	const contents = fs.readFileSync(ccpPath, 'utf8');
+
+	const ccp = JSON.parse(contents);
+
+	console.log(`Loaded the network configuration located at ${ccpPath}`);
+	return ccp;
+}
 
 module.exports.buildCCPOrg1 = () => {
 	// if(path) {
@@ -98,6 +128,20 @@ module.exports.getWalletPath = (org) => {
 	}
 
 	return "wallet/"+org;
+}
+
+module.exports.saveAssets = (type, propertyId, i, base64Data) => {
+	let dir = `assets/${type}/property/${propertyId}`;
+	if (!fs.existsSync(dir)){
+		fs.mkdirSync(dir);
+	}
+
+	// var base64Image = new Buffer.from(base64Data, 'binary').toString('base64');
+	// var decodedImage = new Buffer.from(base64Image, 'base64').toString('binary');
+
+	fs.writeFile(`${dir}/${i}.png`, base64Data, function(err) {
+		console.log(err);
+	});
 }
 
 module.exports.getCA =  (CAname, ccp) => {
@@ -190,7 +234,7 @@ module.exports.enrollAdmin = async (ccp, org, adminId, adminPass) => {
 		const userContract = await this.connectToNetwork(org, ccp, 'mychannel', 'UserContract', 'admin');
 		const adminUser = {
 			name : 'admin',
-			email : 'admin@org1.example.com',
+			email : `admin@${org.toLowerCase()}.example.com`,
 			password : 'adminpw'
 		}
 		await userContract.submitTransaction('createUserAccount', JSON.stringify(adminUser));
@@ -299,6 +343,7 @@ module.exports.registerAndEnrollUser = async (caClient, wallet, orgMspId, user, 
 
 
 module.exports.connectToNetwork = async (org, ccp, channel, ccn, userId) => {
+	// console.log(org, ccp, channel, ccn, userId)
     const walletPath = this.getWalletPath(org);
     const wallet = await this.buildWallet(walletPath);
     const gateway = new Gateway();
@@ -310,7 +355,25 @@ module.exports.connectToNetwork = async (org, ccp, channel, ccn, userId) => {
     });
 
     const network = await gateway.getNetwork(channel);
-    const contract = network.getContract('pbchain-4', ccn);
+    const contract = network.getContract('pbchain', ccn);
+
+    return contract;
+}
+
+module.exports.getContract = async (org, channel, ccn, userId) => {
+	const ccp = this.buildCCP(org);
+	const walletPath = this.getWalletPath(org);
+    const wallet = await this.buildWallet(walletPath);
+    const gateway = new Gateway();
+
+    await gateway.connect(ccp, {
+        wallet,
+        identity: userId,
+        discovery: { enabled: true, asLocalhost: true }
+    });
+
+    const network = await gateway.getNetwork(channel);
+    const contract = network.getContract('pbchain', ccn);
 
     return contract;
 }

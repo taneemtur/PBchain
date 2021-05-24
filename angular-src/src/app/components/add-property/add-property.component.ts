@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PropertyService } from '../../services/property.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LoginService } from 'src/app/services/login.service';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-add-property',
@@ -10,6 +11,9 @@ import { LoginService } from 'src/app/services/login.service';
   styleUrls: ['./add-property.component.css']
 })
 export class AddPropertyComponent implements OnInit {
+
+  @ViewChild('fileInput') fileInput: ElementRef
+  fileAttr = 'Choose File';
 
   cities = ["NONE","KARACHI", "LAHORE", "HYDERABAD", "ISLAMABAD"];
   propertyTypes = ['Flat', 'Commercial', 'Home', 'Portion', 'Room'];
@@ -25,7 +29,11 @@ export class AddPropertyComponent implements OnInit {
   bedroom : number;
   address : string;
 
+  images : any[] = [];
+
   user : any
+
+  selectedFile : any;
 
   constructor(
     private propertyService : PropertyService,
@@ -54,7 +62,8 @@ export class AddPropertyComponent implements OnInit {
     propertyDescription : this.description,
     propertyAddress : this.address,
     propertyTotalRooms : this.bedroom + this.extraRooms,
-    userId : this.user.userId
+    userId : this.user.userId,
+    images : this.images
     }
 
     this.propertyService.addProperty(propertyData)
@@ -73,6 +82,79 @@ export class AddPropertyComponent implements OnInit {
         });
       }
     })
+  }
+
+  onUpload(imgFile: any) {
+    // this.selectedFile = event.target.files[0];
+    // const fileReader = new FileReader();
+    // fileReader.readAsText(this.selectedFile, "UTF-8");
+    // fileReader.onload = () => {
+    //   let fileJson = JSON.parse(fileReader.result as string)
+    //   // this.inputService.updateData(fileJson.data)
+    //   console.log(fileJson)
+    // }
+    // fileReader.onerror = (error) => {
+    //   console.log(error);
+    // }
+
+    if (imgFile.target.files && imgFile.target.files[0]) {
+      this.fileAttr = '';
+      Array.from(imgFile.target.files).forEach((file: File) => {
+        this.fileAttr += file.name + ' - ';
+      });
+
+      let imgs = Array.from(imgFile.target.files);
+      for (let i=0; i<imgs.length; i++) {
+        let reader = new FileReader();
+        reader.onload = ((e : any) => {
+          this.images.push(e.target.result);
+        })
+        reader.readAsDataURL(imgFile.target.files[i]);  
+      }
+      // HTML5 FileReader API
+      // let reader = new FileReader();
+      // reader.onload = (e: any) => {
+      //   let image = new Image();
+      //   image.src = e.target.result;
+      //   image.onload = rs => {
+      //     let imgBase64Path = e.target.result;
+      //   };
+      // };
+
+      // console.log(this.images)
+      // reader.readAsDataURL(imgFile.target.files[0]);
+      
+      // Reset if duplicate image uploaded again
+      // this.fileInput.nativeElement.value = "";
+    } else {
+      this.fileAttr = 'Choose File';
+    }
+  }
+
+  uploadFileEvt(imgFile: any) {
+    if (imgFile.target.files && imgFile.target.files[0]) {
+      this.fileAttr = '';
+      Array.from(imgFile.target.files).forEach((file: File) => {
+        this.fileAttr += file.name + ' - ';
+      });
+
+      // HTML5 FileReader API
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        let image = new Image();
+        image.src = e.target.result;
+        image.onload = rs => {
+          let imgBase64Path = e.target.result;
+        };
+      };
+      console.log(imgFile.target.files[0])
+      reader.readAsDataURL(imgFile.target.files[0]);
+      
+      // Reset if duplicate image uploaded again
+      this.fileInput.nativeElement.value = "";
+    } else {
+      this.fileAttr = 'Choose File';
+    }
   }
 
 }

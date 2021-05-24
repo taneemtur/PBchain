@@ -87,8 +87,12 @@
         <mat-label>Offer Amount</mat-label>
         <input matInput [(ngModel)]="offeredAmount" name="offeredAmount">
       </mat-form-field>
-        <button mat-button type="submit" (click)="placeBuyRequest()" class="btn btn-default">
+        <button mat-button *ngIf="propertyDetails.propertyPurpose == 'Sale'" type="submit" (click)="placeBuyRequest()" class="btn btn-default">
           Place Buy Request
+        </button>
+
+        <button mat-button *ngIf="propertyDetails.propertyPurpose == 'Rent'" type="submit" (click)="placeRentRequest()" class="btn btn-default">
+          Place Rent Request
         </button>
       </mat-card-actions>
   </mat-card>

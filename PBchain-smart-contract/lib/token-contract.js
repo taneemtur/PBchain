@@ -90,7 +90,7 @@ class WalletTokenContract extends UserContract {
 
         const updatedAllowance = currentAllowance - valueInt;
         await ctx.stub.putState(allowanceKey, Buffer.from(updatedAllowance.toString()));
-        console.log(`spender ${spenPubKey} allowance updated from ${currentAllowance} to ${updatedAllowance}`);
+        console.log(`spender ${spenEmail} allowance updated from ${currentAllowance} to ${updatedAllowance}`);
 
         const transferEvent = { fromEmail, toEmail, value: valueInt };
         ctx.stub.setEvent('Transfer', Buffer.from(JSON.stringify(transferEvent)));

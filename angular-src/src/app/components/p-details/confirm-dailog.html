@@ -1,0 +1,19 @@
+<div style="text-align: center;">
+    <h1 >Place a buy request</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+      <mat-label>Offer Amount</mat-label>
+    <input matInput [(ngModel)]="data" name="data">
+  </mat-form-field>
+      
+      <mat-checkbox class="example-margin" >I agree to all terms and conditions</mat-checkbox>
+
+      <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirm</button>
+</div>
+<div style="text-align: center;" mat-dialog-actions>
+  
+</div>
+
+
+</div>
