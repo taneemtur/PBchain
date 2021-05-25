@@ -172,7 +172,8 @@
             <ng-container matColumnDef="accept">
               <th mat-header-cell *matHeaderCellDef>  </th>
               <td mat-cell *matCellDef="let element"> 
-              <button *ngIf="element.status == 'Pending'" mat-button class="btn btn-default" (click)="acceptRentOffer(element)"> Accept Offer</button>    
+              <button *ngIf="element.status == 'Pending'" mat-button class="btn btn-default" (click)="acceptRentOffer(element)"> Accept Offer </button>
+              
               </td>
             </ng-container>
 
@@ -343,7 +344,7 @@
     <app-wallet [user]="user"></app-wallet>
 
     <div class="container">
-      <mat-card-title class="text-uppercase font-weight-bold">Added Properties</mat-card-title>
+      <mat-card-title class="text-uppercase font-weight-bold">Owned Properties</mat-card-title>
       <div fxLayout="row"  fxLayoutGap="15px" class="scroll" >
           <div *ngFor="let p of userProperties">
               <app-p-listing [PDetails]="p"></app-p-listing>

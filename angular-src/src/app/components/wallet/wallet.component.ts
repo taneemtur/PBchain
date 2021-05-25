@@ -14,7 +14,7 @@ export class WalletComponent implements OnInit {
   user : any;
 
   dataSource1 = [];
-  displayedColumns1: string[] = ['type', 'balance', 'txId', 'amount'];
+  displayedColumns1: string[] = ['txId', 'balance'];
 
   balance : Number;
   depositAmount : Number;
@@ -29,6 +29,7 @@ export class WalletComponent implements OnInit {
 
   ngOnInit(): void {
     this.getClientAccBalance();
+    this.getTransactionHistory();
   }
 
   getClientAccBalance() {
@@ -52,6 +53,16 @@ export class WalletComponent implements OnInit {
     })
       
     }
+
+    getTransactionHistory() {
+      this.walletService.getAccountBalanceHistory(this.user.userId)
+        .subscribe(res => {
+          console.log(res);
+          if(res.success) {
+            this.dataSource1 = res.history;
+          }
+        })
+    }
   
     deposit () {
       this.walletService.depositAmount(this.user.email, this.depositAmount)
@@ -61,8 +72,8 @@ export class WalletComponent implements OnInit {
             this._snackBar.open(res.msg, "", {
               duration: 2000,
             });
-  
             this.walletService.balanceUpdate(res.balance)
+            this.getTransactionHistory();
           }
           else {
             this._snackBar.open(res.msg, "", {
@@ -82,6 +93,7 @@ export class WalletComponent implements OnInit {
             });
   
             this.walletService.balanceUpdate(res.balance)
+            this.getTransactionHistory();
           }
           else {
             this._snackBar.open(res.msg, "", {
@@ -101,6 +113,7 @@ export class WalletComponent implements OnInit {
           });
   
           this.walletService.balanceUpdate(res.balance)
+          this.getTransactionHistory();
         }
         else {
           this._snackBar.open(res.msg, "", {

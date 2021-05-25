@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from 'src/app/services/register.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +15,8 @@ export class DashboardComponent implements OnInit {
   displayedColumns1: string[] = ['id', 'propertyId', 'owner', 'ownerEmail', 'status', 'details', 'accept', 'reject']
 
   constructor(
-    private registerService : RegisterService
+    private registerService : RegisterService,
+    private _snackBar : MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +42,10 @@ export class DashboardComponent implements OnInit {
       .subscribe(res => {
         console.log(res)
         if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+          el.status = 'Accepted'
           this.registerReqs()
         }
         else {

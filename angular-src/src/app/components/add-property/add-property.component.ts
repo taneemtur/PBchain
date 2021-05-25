@@ -33,6 +33,8 @@ export class AddPropertyComponent implements OnInit {
 
   user : any
 
+  waiting : Boolean = false;
+
   selectedFile : any;
 
   constructor(
@@ -47,6 +49,15 @@ export class AddPropertyComponent implements OnInit {
       .subscribe(user => {
         this.user = user
       })
+  }
+
+  progreassBar () {
+    if(!this.waiting) {
+      this.waiting = true
+    }
+    else { 
+      this.waiting = false
+    }
   }
 
   onSubmit() {
@@ -66,8 +77,10 @@ export class AddPropertyComponent implements OnInit {
     images : this.images
     }
 
+    this.progreassBar();
     this.propertyService.addProperty(propertyData)
     .subscribe(res => {
+      this.progreassBar()
       console.log(res)
       if(res.success) {
         this._snackBar.open("Successfully added property.", "", {

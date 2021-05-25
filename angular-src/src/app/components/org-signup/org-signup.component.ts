@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterService } from 'src/app/services/register.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-org-signup',
@@ -9,7 +10,8 @@ import { RegisterService } from 'src/app/services/register.service';
 export class OrgSignupComponent implements OnInit {
 
   constructor(
-    private registerService : RegisterService
+    private registerService : RegisterService,
+    private _snackBar : MatSnackBar,
   ) { }
 
   orgName : string;
@@ -35,7 +37,9 @@ export class OrgSignupComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         if(res.success) {
-
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
         }
         else {
 
@@ -56,7 +60,9 @@ export class OrgSignupComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         if(res.success) {
-
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
         }
         else {
 

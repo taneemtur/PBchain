@@ -30,6 +30,8 @@ export class ProfileComponent implements OnInit {
   dataSource2 = [];
   dataSource3 = [];
 
+  waiting : boolean = false;
+
   balance : Number;
   depositAmount : Number;
   transferTo : string;
@@ -64,9 +66,20 @@ export class ProfileComponent implements OnInit {
     this.getPropertiesOnRent();
   }
 
+  progreassBar () {
+    if(!this.waiting) {
+      this.waiting = true
+    }
+    else { 
+      this.waiting = false
+    }
+  }
+
   acceptOffer(element) {
+    this.progreassBar();
     this.propertyService.transferProperty(element.propertyPropertyId, element.userUserId, element.amount)
       .subscribe(res => {
+        this.progreassBar();
         if(res.success) {
           this._snackBar.open(res.msg, "", {
             duration: 2000,
@@ -74,6 +87,7 @@ export class ProfileComponent implements OnInit {
 
           this.getBuyRequests();
           this.getUserProperties();
+          this.getClientAccBalance()
         }        
       })
   }
@@ -87,10 +101,16 @@ export class ProfileComponent implements OnInit {
       amount : el.amount
     }
 
+    this.progreassBar();
+
     this.propertyService.acceptRentOffer(data)
       .subscribe(res => {
+        this.progreassBar();
         console.log(res)
         if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
           this.getRentRequests();
           this.getClientAccBalance();
           this.getPropertiesOnRent();

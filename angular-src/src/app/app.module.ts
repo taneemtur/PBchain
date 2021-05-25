@@ -29,6 +29,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTabsModule } from '@angular/material/tabs'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'
 
 import { AddPropertyComponent } from './components/add-property/add-property.component';
 import { PDetailsComponent } from './components/p-details/p-details.component';
@@ -122,7 +123,8 @@ import { ConfirmDailog } from './components/p-details/p-details.component';
     MatCheckboxModule,
     MatTableModule,
     MatTabsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

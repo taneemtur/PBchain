@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { PropertyService } from 'src/app/services/property.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -37,7 +38,8 @@ export class PDetailsComponent implements OnInit {
     public dialog: MatDialog,
     private router : Router,
     private propertyService : PropertyService,
-    private loginService : LoginService
+    private loginService : LoginService,
+    private _snackBar : MatSnackBar,
     ) { 
     this.propertyDetails = this.router.getCurrentNavigation().extras.state.propertyDetails;
   }
@@ -72,6 +74,9 @@ export class PDetailsComponent implements OnInit {
     this.propertyService.placeBuyRequest(req)
      .subscribe(res => {
        if(res.success) {
+        this._snackBar.open(res.msg, "", {
+          duration: 2000,
+        });
          console.log(res)
        }
        else {
@@ -90,6 +95,9 @@ export class PDetailsComponent implements OnInit {
     this.propertyService.placeRentRequest(req)
      .subscribe(res => {
        if(res.success) {
+        this._snackBar.open(res.msg, "", {
+          duration: 2000,
+        });
          console.log(res, "rent")
        }
        else {

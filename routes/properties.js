@@ -180,7 +180,7 @@ router.post('/transfer-property/:propertyId', async (req, res, next) => {
         let contract = await AppUtils.connectToNetwork('Org1', ccp, 'mychannel', 'PropertyAssetContract', prevUser.email)
         let transfer = await contract.submitTransaction('transferPropertyOwnership', propertyId, prevUser.email, newUser.email, amount)
         contract = await AppUtils.getContract('Org1', 'mychannel', 'WalletTokenContract', 'admin')
-        transfer = await contract.submitTransaction('Transfer', prevUser.email, amount)
+        transfer = await contract.submitTransaction('TransferFrom', newUser.email, prevUser.email, amount)
         let updatedProperty = await Property.updatePropertyOwner(propertyId, newOwner);
         let acceptedReq = await BuyRequest.updateStatus(propertyId, 'Accepted');
         console.log(updatedProperty, acceptedReq)

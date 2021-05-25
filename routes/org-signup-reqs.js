@@ -2,6 +2,7 @@ const router = require('express').Router();
 const Developer = require('../models/developer');
 const Agency = require('../models/real-estate-agency');
 const OrgReqs = require('../models/org-signup-req');
+const AppUtils = require('../utils/AppUtils')
 
 router.post('/real-estate-agency', async (req, res, next) => {
     let data = {
@@ -81,6 +82,14 @@ router.post('/accept-req', async (req, res, next) => {
             let agency = await Agency.addAgency(orgData);
             console.log(agency);
             if(agency) {
+                let ccp = AppUtils.buildCCPOrg2();
+                AppUtils.enrollAdmin(ccp, 'Org2', 'admin', 'adminpw')
+                .then(() => {
+                    console.log("Successful");
+                })
+                .catch(err => {
+                    console.error(err);
+                })
                 OrgReqs.updateStatus(orgData.agencyEmail, 'Accepted');
                 res.json({success : true, msg : "Agency Registered" })
             }

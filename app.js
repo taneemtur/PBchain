@@ -32,18 +32,18 @@ AppUtils.enrollAdminPbchain('admin', 'adminpw')
      console.error(err);
  })
 
- let ccp = AppUtils.buildCCPOrg2();
- AppUtils.enrollAdmin(ccp, 'Org2', 'admin', 'adminpw')
- .then(() => {
-     console.log("Successful");
- })
- .catch(err => {
-     console.error(err);
- })
+//  let ccp = AppUtils.buildCCPOrg2();
+//  AppUtils.enrollAdmin(ccp, 'Org2', 'admin', 'adminpw')
+//  .then(() => {
+//      console.log("Successful");
+//  })
+//  .catch(err => {
+//      console.error(err);
+//  })
 
 
-// conn.sync({force : true})
-conn.sync()
+conn.sync({force : true})
+// conn.sync()
 
 
 

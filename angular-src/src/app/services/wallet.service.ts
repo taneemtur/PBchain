@@ -59,6 +59,11 @@ export class WalletService {
     }
   }
 
+  getAccountBalanceHistory (userId) {
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    return this.http.get<any>('http://localhost:3000/wallet/account-balance-history/'+userId, {headers : headers});
+  }
+
   balanceUpdate (balance) {
     this.source.next(balance);
   }

@@ -80,6 +80,22 @@ router.get('/account-balance/:email', async (req, res, next) => {
     }
 });
 
+router.get('/account-balance-history/:userId', async (req, res, next) => {
+    const userId = req.params.userId;
+    const org = 'Org1';
+
+    try {
+        const user = await UserModel.getUserById(userId);
+        const contract = await AppUtils.getContract(org, 'mychannel', 'WalletTokenContract', user.email);
+        const history = await contract.submitTransaction('getTransactionHistory')
+        res.json({success : true, history : JSON.parse(history.toString('utf8'))});
+    }
+    catch (err) {
+        console.error(err);
+        res.json({success : false, msg : "Failed to get account balance history."})
+    }
+});
+
 router.post('/withdraw', async (req, res, next) => {
     const userEmail = req.body.email;
     const amount = req.body.amount;
