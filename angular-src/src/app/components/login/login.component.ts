@@ -36,6 +36,7 @@ export class LoginComponent implements OnInit {
           });
 
           this.loginService.nextUser(res.user);
+          this.loginService.setToken(res.token)
           this.router.navigate(['/profile'], { state : { user : res.user}})
         }
         else {

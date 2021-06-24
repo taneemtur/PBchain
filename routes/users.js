@@ -3,8 +3,9 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const AppUtils = require('../utils/AppUtils');
 
+require('dotenv').config()
 
-const secret = 'PBCHAINUSER';
+const secret = process.env.SECRET;
 
 router.post('/register-user', async (req, res, next) => {
     data = {

@@ -5,6 +5,9 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const conn = require('./config/database');
 const AppUtils = require('./utils/AppUtils');
+
+
+
 const app = express();
 
 
@@ -42,8 +45,8 @@ AppUtils.enrollAdminPbchain('admin', 'adminpw')
 //  })
 
 
-conn.sync({force : true})
-// conn.sync()
+// conn.sync({force : true})
+conn.sync()
 
 
 

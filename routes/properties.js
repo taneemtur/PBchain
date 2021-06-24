@@ -5,6 +5,7 @@ const BuyRequest = require('../models/buy-request');
 const RentRequest = require('../models/rent-request');
 const RentedProperty = require('../models/rented-property')
 const AppUtils = require('../utils/AppUtils');
+const rentedProperty = require('../models/rented-property');
 
 router.post('/add-property', async (req, res, next) => {
     let data = {
@@ -166,15 +167,16 @@ router.get('/find-by-query', (req, res, next) => {
     });
 })
 
-router.post('/transfer-property/:propertyId', async (req, res, next) => {
+router.post('/transfer-property/:propertyId', AppUtils.verifyToken, async (req, res, next) => {
     let propertyId = req.params.propertyId;
     let newOwner = req.body.newOwner;
     let amount = req.body.amount;
 
+    let user = req.user;
     try {
-        let property = await Property.getPropertyById(propertyId);
+        // let property = await Property.getPropertyById(propertyId);
         const ccp = AppUtils.buildCCPOrg1();
-        const prevUser = await UserModel.getUserById(property.userUserId);
+        const prevUser = user;
         const newUser = await UserModel.getUserById(newOwner);
         console.log(prevUser, newUser)
         let contract = await AppUtils.connectToNetwork('Org1', ccp, 'mychannel', 'PropertyAssetContract', prevUser.email)
@@ -289,6 +291,26 @@ router.get('/on-rent/:owner', async (req, res, next) => {
     }
     catch (err) {
         res.json({success : true, msg : "Failed to get properties"})
+    }
+})
+
+router.get('/pay-rent/:propertyId', AppUtils.verifyToken, async (req, res, next) => {
+    let user = req.user;
+    let propertyId = req.params.propertyId;
+    let org = 'Org1'
+    try {
+        const contract = await AppUtils.getContract(org, 'mychannel', 'PropertyAssetContract', user.email);
+        await contract.submitTransaction('payRent', propertyId);
+        const rentBuffer = await contract.submitTransaction('getPropertyRent', propertyId);
+        const rentObj = JSON.parse(rentBuffer.toString())
+        let rentProperty = await RentedProperty.findOne({where : {propertyId : propertyId}});
+        rentProperty.rentDueDate = rentObj.rentDueDate;
+
+        rentProperty.save()
+        res.json({success : true, msg : "Rent paid"})
+    }
+    catch (err) {
+        res.json({success : true, msg : "Failed to pay rent.", err : err})
     }
 })
 

@@ -124,6 +124,40 @@ class PropertyAssetContract extends WalletTokenContract{
         return rent;
     }
 
+    async payRent (ctx, propertyAssetId) {
+        const propertyBytes = await ctx.stub.getState(propertyAssetId); 
+        if (!propertyBytes || propertyBytes.length === 0) {
+            throw new Error(`${propertyAssetId} does not exist`);
+        }
+        const property = JSON.parse(propertyBytes.toString());
+
+        const rentKey = ctx.stub.createCompositeKey(rentPrefix, [propertyAssetId]);
+        const buffer = await ctx.stub.getState(rentKey);
+
+        if (!(!!buffer && buffer.length > 0)) {
+            throw new Error(`The property asset ${propertyAssetId} not on rent`);
+        }
+
+        let rent = JSON.parse(buffer.toString());
+
+        const propertyOwner = property.owner;
+        const rentAmount = rent.rentPerMonth;
+        
+        const transfer = await this.Transfer(ctx, propertyOwner, rentAmount);
+
+        if (transfer) {
+            let rentDueDate = new Date(rent.rentDueDate);
+            rentDueDate.setMonth(rentDueDate.getMonth() + 1);
+            rent.rentDueDate = rentDueDate.toDateString();
+
+            const rentObj = Buffer.from(JSON.stringify(rent));
+            await ctx.stub.putState(rentKey, rentObj);
+        }
+        else {
+            throw new Error('Unable to transfer rent amount')
+        }
+    }
+
     async updateRent (ctx, propertyAssetId, newRent) {
         const exists = await this.propertyAssetExists(ctx, propertyAssetId);
 

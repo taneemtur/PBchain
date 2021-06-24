@@ -1,13 +1,32 @@
 
 'use strict';
 
+require('dotenv').config()
+
 const fs = require('fs');
 const path = require('path');
-
 const { Gateway, Wallet, Wallets, IdentityService } = require('fabric-network');
 const FabricCAServices = require('fabric-ca-client');
 const bcrypt = require('bcryptjs');
 const { model } = require('mongoose');
+const jwt = require('jsonwebtoken');
+
+const secret = process.env.SECRET;
+
+module.exports.verifyToken = (req, res, next) => {
+	let token = (req.headers['authorization'].split(' '))[1];
+	// console.log(secret)
+	jwt.verify(token, secret, (err, valid) => {
+		if(err) {
+			console.log(err)
+			res.sendStatus(401);
+		}
+		else {
+			req.user = valid.user;
+			next();
+		}
+	})
+}
 
 module.exports.timeConverter = (timestamp) => {
 	var a = new Date(timestamp*1000);
@@ -25,7 +44,7 @@ module.exports.timeConverter = (timestamp) => {
 
 module.exports.buildCCP = (org) => {
 	org = org.toLowerCase();
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
+	const ccpPath = path.resolve(__dirname, '..', '..', 'test-network',
 		'organizations', 'peerOrganizations', `${org}.example.com`, `connection-${org}.json`);
 	console.log(ccpPath)
 	const fileExists = fs.existsSync(ccpPath);
@@ -49,7 +68,7 @@ module.exports.buildCCPOrg1 = () => {
 	// }
 	// load the common connection configuration file
 	console.log(__dirname)
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
+	const ccpPath = path.resolve(__dirname, '..', '..', 'test-network', 'organizations', 'peerOrganizations', 'org1.example.com', 'connection-org1.json');
 	// const ccpPath = 'ccpOrg1.json'
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
@@ -66,7 +85,7 @@ module.exports.buildCCPOrg1 = () => {
 
 module.exports.buildCCPOrg2 = () => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
+	const ccpPath = path.resolve(__dirname, '..', '..', 'test-network',
 		'organizations', 'peerOrganizations', 'org2.example.com', 'connection-org2.json');
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {
@@ -83,7 +102,7 @@ module.exports.buildCCPOrg2 = () => {
 
 module.exports.buildCCPOrg3 = () => {
 	// load the common connection configuration file
-	const ccpPath = path.resolve(__dirname, '..', '..', '..', 'hlf', 'fabric-samples', 'test-network',
+	const ccpPath = path.resolve(__dirname, '..', '..', 'test-network',
 		'organizations', 'peerOrganizations', 'org3.example.com', 'connection-org3.json');
 	const fileExists = fs.existsSync(ccpPath);
 	if (!fileExists) {

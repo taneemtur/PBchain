@@ -4,7 +4,7 @@ const PropertyModel = require('../models/property')
 const AppUtils = require('../utils/AppUtils');
 const UserModel = require('../models/user');
 
-router.post('/place-buy-request', async (req, res, next) => {
+router.post('/place-buy-request', AppUtils.verifyToken, async (req, res, next) => {
     let buyReq = {
         amount : req.body.amount,
         userUserId : req.body.userId,
@@ -12,9 +12,10 @@ router.post('/place-buy-request', async (req, res, next) => {
         status : 'Pending'
     }
     let org = 'Org1';
+    let user = req.user;
     console.log(buyReq)
     try {
-        let user = await UserModel.getUserById(buyReq.userUserId)
+        // let user = await UserModel.getUserById(buyReq.userUserId)
         const contract = await AppUtils.getContract(org, 'mychannel', 'WalletTokenContract', user.email);
         let allowance = await contract.submitTransaction('Approve', 'admin@org1.example.com', buyReq.amount);
         if (allowance) {
@@ -37,8 +38,10 @@ router.post('/place-buy-request', async (req, res, next) => {
     }
 })
 
-router.get('/get-buy-requests/:userId', async (req, res, next) => {
-    let userId = req.params.userId;
+router.get('/get-buy-requests', AppUtils.verifyToken, async (req, res, next) => {
+    let user = req.user;
+    let userId = user.userId;
+    console.log(user)
     try {
         let userProperties = await PropertyModel.findAll({where : {
             userUserId : userId

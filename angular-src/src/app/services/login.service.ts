@@ -17,6 +17,10 @@ export class LoginService {
     return this.http.post<any>('http://localhost:3000/user/authenticate-user', user, {headers : headers})
   }
 
+  setToken (token) {
+    localStorage.setItem('token', token);
+  }
+
   nextUser (user) {
     this.source.next(user);
   }

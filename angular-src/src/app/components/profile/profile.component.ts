@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit {
 
   displayedColumns: string[] = ['id', 'from', 'forProperty', 'amount', 'status', 'accept', 'reject'];
   displayedColumns1: string[] = ['id', 'from', 'forProperty', 'amount', 'status', 'accept', 'reject'];
-  displayedColumns2: string[] = ['id', 'propertyId', 'owner', 'rentPerMonth', 'securityDeposit', 'rentedOn', 'rentDueDate'];
+  displayedColumns2: string[] = ['id', 'propertyId', 'owner', 'rentPerMonth', 'securityDeposit', 'rentedOn', 'rentDueDate', 'payRent'];
   displayedColumns3: string[] = ['id', 'propertyId', 'tenant', 'rentPerMonth', 'securityDeposit', 'rentedOn', 'rentDueDate'];
   dataSource = [];
   dataSource1 = [];
@@ -164,6 +164,28 @@ export class ProfileComponent implements OnInit {
         console.log(res)
         if(res.success) {
           this.dataSource3 = res.properties;
+        }
+      })
+  }
+
+  payRent (e) {
+    let propertyId = e.propertyId;
+    this.propertyService.payPropertyRent(propertyId)
+      .subscribe(res => {
+        console.log(res);
+        if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+
+          this.getClientAccBalance();
+          this.getRentedProperties();
+          
+        }
+        else {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
         }
       })
   }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -32,20 +32,29 @@ export class PropertyService {
 
   placeBuyRequest (req) {
     console.log(req)
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
+
     return this.http.post<any>('http://localhost:3000/buy/place-buy-request', req, {headers : headers})
   }
 
   getUserBuyRequests (userId) {
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
-    return this.http.get<any>('http://localhost:3000/buy/get-buy-requests/'+userId, {headers : headers, params : {
-      userId : userId
-    }})
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
+
+    return this.http.get<any>('http://localhost:3000/buy/get-buy-requests', {headers : headers})
   }
 
   transferProperty (propertyId, newOwner, amount) {
     console.log(propertyId, newOwner)
-    let headers = new HttpHeaders().set('Content-Type', 'application/json');
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
     return this.http.post<any>('http://localhost:3000/property/transfer-property/'+propertyId, {newOwner : newOwner, amount : amount}, {headers : headers})    
   }
 
@@ -86,5 +95,15 @@ export class PropertyService {
   getPropertiesOnRent (owner) {
     let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this.http.get<any>('http://localhost:3000/property/on-rent/'+owner, {headers : headers});
+  }
+
+  payPropertyRent (propertyId) {
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
+    let params = new HttpParams()
+      .set('propertyId', propertyId)
+    return this.http.get<any>('http://localhost:3000/property/pay-rent/'+propertyId, {headers : headers, params : params})
   }
 }
