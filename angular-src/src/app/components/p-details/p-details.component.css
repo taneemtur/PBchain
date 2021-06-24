@@ -19,7 +19,9 @@ ngb-carousel {
 .carousel-inner {
     overflow: visible;
 }
-
+.example-spacer {
+  flex: 1 1 auto;
+}
 .carousel-item {
     display: flex !important;
     opacity: 0;
