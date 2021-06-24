@@ -45,8 +45,8 @@ AppUtils.enrollAdminPbchain('admin', 'adminpw')
 //  })
 
 
-// conn.sync({force : true})
-conn.sync()
+conn.sync({force : true})
+// conn.sync()
 
 
 

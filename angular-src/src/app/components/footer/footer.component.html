@@ -147,12 +147,10 @@
                                 <h4>Quick links </h4>
                                 <div class="footer-title-line"></div>
                                 <ul class="footer-menu">
-                                    <li><a href="properties.html">Properties</a>  </li> 
-                                    <li><a href="#">Services</a>  </li> 
-                                    <li><a href="submit-property.html">Submit property </a></li> 
-                                    <li><a href="contact.html">Contact us</a></li> 
-                                    <li><a href="faq.html">fqa</a>  </li> 
-                                    <li><a href="faq.html">Terms </a>  </li> 
+                                    <li><a routerLink="/listing" routerLinkActive="active">Properties</a>  </li> 
+                                    <li><a routerLink="/calculator" routerLinkActive="active">Services</a>  </li> 
+                                    <li><a routerLink="/add-property" routerLinkActive="active">Submit property </a></li> 
+                                    <li><a routerLink="/contact" routerLinkActive="active">Contact us</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -223,7 +221,7 @@
                                     <!-- /input-group -->
                                 </form> 
 
-                                <div class="social pull-right"> 
+                                <!-- <div class="social pull-right"> 
                                     <ul>
                                         <li><a class="wow fadeInUp animated" href="https://twitter.com/kimarotec"><i class="fa fa-twitter"></i></a></li>
                                         <li><a class="wow fadeInUp animated" href="https://www.facebook.com/kimarotec" data-wow-delay="0.2s"><i class="fa fa-facebook"></i></a></li>
@@ -231,7 +229,7 @@
                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.4s"><i class="fa fa-instagram"></i></a></li>
                                         <li><a class="wow fadeInUp animated" href="https://instagram.com/kimarotec" data-wow-delay="0.6s"><i class="fa fa-dribbble"></i></a></li>
                                     </ul> 
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -244,10 +242,9 @@
                     <div class="row">
                         <div class="bottom-menu pull-right"> 
                             <ul> 
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.2s">Home</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.3s">Property</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.4s">Faq</a></li>
-                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s">Contact</a></li>
+                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.2s" routerLink="/" routerLinkActive="active">Home</a></li>
+                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.3s" routerLink="/listing" routerLinkActive="active">Property</a></li>
+                                <li><a class="wow fadeInUp animated" href="#" data-wow-delay="0.6s" routerLink="/contact" routerLinkActive="active">Contact</a></li>
                             </ul> 
                         </div>
                     </div>

@@ -16,10 +16,11 @@ router.post('/register-user', async (req, res, next) => {
         password : req.body.password
     }
 
+    console.log(data)
     try {
 
         const user = await User.addUser(data);
-
+        console.log(user)
         const ccp = AppUtils.buildCCPOrg1();
         const walletPath = AppUtils.getWalletPath("Org1");
         const wallet = await AppUtils.buildWallet(walletPath);
