@@ -179,3 +179,20 @@ module.exports.updatePropertyOwner = async (propertyId, newOwner) => {
         throw err;
     }
 }
+
+module.exports.deleteProperty = async (propertyId) => {
+    try {
+        const property = await PropertyModel.findOne({ where: { propertyId : propertyId } });
+
+    if(property) {
+        await property.destroy();
+        return true
+    }
+    else {
+        throw new Error("Cannot find property ID " + propertyId)
+    }
+    }
+    catch (err) {
+        throw err
+    }
+}

@@ -67,13 +67,9 @@
   
   <mat-card class="content-container">
     <mat-card-header>
-      <mat-card-title>
-        <h1>Property Details</h1>
-        
-        
-      </mat-card-title>
-      <span class="example-spacer"></span>
-        <button  mat-button class="btn btn-default" routerLink="/calculator" routerLinkActive="active">Feature Property</button>
+      <mat-card-title>Property Details</mat-card-title>
+      <!-- <span class="example-spacer"></span> -->
+      <!-- <button  mat-button class="btn btn-default" routerLink="/calculator" routerLinkActive="active">Feature Property</button> -->
     </mat-card-header>
       <ul>
         <li> Property ID: {{ propertyDetails.propertyId }}</li>
@@ -102,6 +98,31 @@
         </button>
       </mat-card-actions>
   </mat-card>
+
+  <div *ngIf="user.userId == propertyDetails.userUserId" class="container">
+    <mat-card style=" margin-bottom: 50px;">
+      <mat-card-title>Feature Property</mat-card-title>
+      <div style="text-align : center;">
+        <mat-form-field>
+          <mat-label>Packages</mat-label>
+          <mat-select [(ngModel)]="package" name="package">
+            <mat-option *ngFor="let type of packages" [value]="type">
+              {{type.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <mat-form-field style="margin : 0px 10px">
+          <mat-label>Property ID</mat-label>
+          <input matInput [(ngModel)]="propertyId" name="propertyId">
+        </mat-form-field>
+  
+        <button mat-button type="submit" (click)="buyPackage()" class="btn btn-default">
+          Buy Package
+        </button>
+      </div>
+    </mat-card>
+  </div>
 
   <div class="container">
     <app-property-history [propertyId]="propertyDetails.propertyId"></app-property-history>

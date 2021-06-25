@@ -106,4 +106,22 @@ export class PropertyService {
       .set('propertyId', propertyId)
     return this.http.get<any>('http://localhost:3000/property/pay-rent/'+propertyId, {headers : headers, params : params})
   }
+
+  deleteProperty (propertyId) {
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
+
+    return this.http.delete<any>('http://localhost:3000/property/delete-property/'+propertyId, {headers : headers})
+  }
+
+  featureProperty (featureData) {
+    let token = localStorage.getItem('token');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('authorization', `JWT ${token}`)
+
+    return this.http.post<any>('http://localhost:3000/property/feature-property/', featureData, {headers : headers})    
+  }
 }

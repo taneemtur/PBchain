@@ -5,7 +5,7 @@ const BuyRequest = require('../models/buy-request');
 const RentRequest = require('../models/rent-request');
 const RentedProperty = require('../models/rented-property')
 const AppUtils = require('../utils/AppUtils');
-const rentedProperty = require('../models/rented-property');
+const FeaturedProperty = require('../models/featured-property');
 
 router.post('/add-property', async (req, res, next) => {
     let data = {
@@ -278,7 +278,7 @@ router.get('/get-rented-properties/:tenant', async (req, res, next) => {
         res.json({success : true, properties : properties})
     }
     catch (err) {
-        res.json({success : true, msg : "Failed to get properties"})
+        res.json({success : false, msg : "Failed to get properties"})
     }
 })
 
@@ -290,7 +290,7 @@ router.get('/on-rent/:owner', async (req, res, next) => {
         res.json({success : true, properties : properties})
     }
     catch (err) {
-        res.json({success : true, msg : "Failed to get properties"})
+        res.json({success : false, msg : "Failed to get properties"})
     }
 })
 
@@ -310,7 +310,49 @@ router.get('/pay-rent/:propertyId', AppUtils.verifyToken, async (req, res, next)
         res.json({success : true, msg : "Rent paid"})
     }
     catch (err) {
-        res.json({success : true, msg : "Failed to pay rent.", err : err})
+        res.json({success : false, msg : "Failed to pay rent.", err : err})
+    }
+})
+
+
+router.delete('/delete-property/:propertyId', AppUtils.verifyToken, async (req, res, next) => {
+    let user = req.user;
+    let propertyId = req.params.propertyId;
+
+    try {
+        const contract = await AppUtils.getContract('Org1', 'mychannel', 'PropertyAssetContract', 'admin');
+        await contract.submitTransaction('deletePropertyAsset', propertyId);
+        await Property.deleteProperty(propertyId)
+        res.json({success : true, msg : "Property deleted"})
+    }
+    catch (err) {
+        res.json({success : false, msg : "Failed to delete property", err : err})
+    }
+})
+
+router.post('/feature-property', AppUtils.verifyToken, async (req, res, next) => {
+    let user = req.user;
+    let data = {
+        propertyId : req.body.propertyId,
+        package : req.body.package,
+        price : req.body.price
+    }
+    let org = "Org1";
+
+    try {
+        const contract = await AppUtils.getContract(org, 'mychannel', 'WalletTokenContract', user.email);
+        let transfer = await contract.submitTransaction('Transfer', 'admin@org1.example.com', data.price);
+        if(transfer) {
+            await FeaturedProperty.addFeaturedProperty(data);
+            res.json({success : true, msg : "Property featured"})    
+        }
+        else {
+            res.json({success : false, msg : "Failed to feature property"})
+        }
+        // res.json({success : true, msg : "Property featured"})
+    }
+    catch (err) {
+        res.json({success : false, msg : "Failed to feature property", err : err})
     }
 })
 

@@ -14,6 +14,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class PDetailsComponent implements OnInit {
 
 
+  packages = [
+    {name : "Basic", price : 3000},
+    {name : "Pro", price : 5500},
+    {name : "Premium", price : 10000}
+  ]
+
+  package : any;
+
+  propertyId : String;
+
+
   propertyDetails = {
     propertyAddress: "dasda",
     propertyArea: 23123,
@@ -106,7 +117,27 @@ export class PDetailsComponent implements OnInit {
      })
   }
 
+  buyPackage () {
+    let data = {
+      propertyId :this.propertyId,
+      package :this.package.name,
+      price : this.package.price
+    }
 
+    this.propertyService.featureProperty(data)
+      .subscribe(res => {
+        if(res.success) {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+        }
+        else {
+          this._snackBar.open(res.msg, "", {
+            duration: 2000,
+          });
+        }
+      })
+  }
 
 }
 
