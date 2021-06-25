@@ -356,4 +356,20 @@ router.post('/feature-property', AppUtils.verifyToken, async (req, res, next) =>
     }
 })
 
+router.get('/featured-properties', async (req, res, next) => {
+    try {
+        let featureProperty = await FeaturedProperty.findAll();
+        let properties = []
+        for(let i=0; i<featureProperty.length; i++) {
+            let property = await Property.getPropertyById(featureProperty[i].propertyId);
+            properties.push(property);
+        }
+        console.log(properties)
+        res.json({success : true, properties : properties})
+    }
+    catch (err) {
+        res.json({success : false, msg : "Failed to get properties"})
+    }
+})
+
 module.exports = router;

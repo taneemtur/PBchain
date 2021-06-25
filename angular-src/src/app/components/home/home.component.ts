@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 // import { FirebaseService } from '../services/firebase.service';
 
 import { Observable } from 'rxjs';
+import { PropertyService } from 'src/app/services/property.service';
 // import * as firebase from 'firebase/app';
 
 @Component({
@@ -16,7 +17,9 @@ export class HomeComponent implements OnInit {
 
   // user: Observable<firebase.User>;
 
-  constructor(private router: Router) { 
+  properties = []
+
+  constructor(private router: Router, private propertyService : PropertyService) { 
     // this.user = afAuth.authState;
   }
 
@@ -26,6 +29,13 @@ export class HomeComponent implements OnInit {
   }
   
   ngOnInit() {
+    this.propertyService.getFeaturedProperties()
+      .subscribe(res => {
+        console.log(res)
+        if(res.success) {
+          this.properties = res.properties;
+        }
+      })
   }
 
 }

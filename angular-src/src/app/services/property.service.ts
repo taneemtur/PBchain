@@ -124,4 +124,11 @@ export class PropertyService {
 
     return this.http.post<any>('http://localhost:3000/property/feature-property/', featureData, {headers : headers})    
   }
+
+  getFeaturedProperties () {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      
+    return this.http.get<any>('http://localhost:3000/property/featured-properties/',  {headers : headers})
+  }
 }
