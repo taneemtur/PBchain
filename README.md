@@ -7,4 +7,14 @@ The chaincode will further manage updating, deletion and transfer of the asset a
 Government, corporate sectors, builders, and estate agents could benefit from our application. 
 Users will be able to deal fairly without getting into trouble.
 
+Some of the application preview is available
+
+https://ibb.co/Yb6jHHT
+
+https://ibb.co/Q6nN1rj
+
+https://ibb.co/LpySCtG
+
+https://ibb.co/P4Ty6tx
+
 
